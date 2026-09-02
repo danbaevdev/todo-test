@@ -1,75 +1,60 @@
-# Nuxt Minimal Starter
+# Заметки & Todo
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+SPA-приложение для заметок со списками задач. Nuxt 4, Composition API, TypeScript strict.
+Без UI-библиотек — вёрстка, модальные окна и дизайн-система собственные (SCSS).
 
-## Setup
+## Возможности
 
-Make sure to install dependencies:
+- **Главная** — список заметок с сокращённым превью Todo, создание / переход к редактированию / удаление (с подтверждением).
+- **Редактор** — правка названия и пунктов Todo (добавить / удалить / изменить текст / отметить), сохранение, отмена (с подтверждением), удаление.
+- **История изменений** — ручной undo/redo (`Ctrl+Z` / `Shift+Ctrl+Z`, глобально на странице редактирования):
+  - непрерывный ввод в одно поле — одна запись (фиксация по blur / паузе);
+  - чекбокс, добавление и удаление пункта — атомарные записи;
+  - новое действие после undo очищает redo-ветку;
+  - лимит 50 шагов, хранятся диффы операций, а не копии заметки;
+  - история живёт в рамках сессии: «Сохранить» и «Отменить редактирование» её сбрасывают.
+- **Хранилище** — ручная синхронизация с `localStorage` (debounce, флаш по `visibilitychange` / `beforeunload`), версия схемы в данных, миграции.
+- **Черновик** — незасохранённое редактирование переживает случайную перезагрузку: при возврате предлагается восстановить.
+- **Edge-cases** — прямой переход по URL несуществующей заметки (404), пустое название / пустой пункт, удаление открытой заметки из другой вкладки (приложение не ломается, показывается баннер).
+- **Доступность** — модалки с focus-trap, закрытием по `Escape`, возвратом фокуса; полная работа с клавиатуры; без нативных алертов.
+
+## Архитектура
+
+| Слой | Файл |
+|---|---|
+| Типы и версия схемы | `app/types/note.ts` |
+| Хранилище (localStorage, миграции, черновик) | `app/utils/storage.ts` |
+| Менеджер состояния (Pinia) | `app/stores/notes.ts` |
+| История изменений | `app/composables/useEditHistory.ts` |
+| Глобальные Ctrl+Z / Shift+Ctrl+Z | `app/composables/useUndoRedoShortcuts.ts` |
+| Автосохранение черновика | `app/composables/useNoteDraft.ts` |
+| Focus-trap | `app/composables/useFocusTrap.ts` |
+| Дизайн-токены (SCSS + CSS custom properties, тема) | `app/assets/styles/` |
+| UI-примитивы | `app/components/ui/` |
+| Доменные компоненты | `app/components/notes/` |
+
+**Undo без хранения 50 копий:** история — стек типизированных операций (`set-title`, `toggle-todo`,
+`edit-todo-text`, `add-todo`, `remove-todo`), каждая знает, как примениться и как откатиться.
+Текстовый ввод коалесится в открытую запись до `seal()` (blur / пауза).
+
+**Конфликт Ctrl+Z с полями:** пока фокус в текстовом поле, работает нативный undo браузера;
+глобальный перехват — только когда фокус вне полей. Правки полей всё равно попадают в историю
+через фиксацию по blur / паузе.
+
+## Разработка
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+npm run dev          # http://localhost:3000
+npm run test         # unit-тесты (Vitest): история изменений, стор, хранилище
+npm run typecheck    # vue-tsc, strict
+npm run build        # продакшн-сборка в .output
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## Docker
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+docker-compose up --build
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Приложение будет доступно на `http://localhost:3000`.
