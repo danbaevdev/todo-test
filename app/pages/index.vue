@@ -1,20 +1,77 @@
 <script setup lang="ts">
-// Placeholder home page — replaced by the notes list in the next step.
+import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useNotesStore } from '~/stores/notes'
+import type { Note } from '~/types/note'
+
+const store = useNotesStore()
+const { sortedNotes, loaded } = storeToRefs(store)
+const router = useRouter()
+
+const pendingDelete = ref<Note | null>(null)
+
+function createNote() {
+  const note = store.createNote()
+  router.push(`/notes/${note.id}`)
+}
+
+function confirmDelete() {
+  if (pendingDelete.value) store.deleteNote(pendingDelete.value.id)
+  pendingDelete.value = null
+}
 </script>
 
 <template>
-  <main class="home">
-    <h1>Notes &amp; Todo</h1>
-    <p>Design tokens installed. Implementation follows the plan.</p>
-  </main>
+  <div class="notes">
+    <div class="notes__bar">
+      <h1>Мои заметки</h1>
+      <BaseButton variant="primary" @click="createNote">Новая заметка</BaseButton>
+    </div>
+
+    <template v-if="loaded">
+      <EmptyNotesState v-if="!sortedNotes.length" />
+      <div v-else class="notes__grid">
+        <NoteCard
+          v-for="note in sortedNotes"
+          :key="note.id"
+          :note="note"
+          @delete="pendingDelete = note"
+        />
+      </div>
+    </template>
+
+    <ConfirmDialog
+      v-if="pendingDelete"
+      title="Удалить заметку?"
+      :message="`Заметка «${pendingDelete.title || 'Без названия'}» будет удалена без возможности восстановления.`"
+      confirm-label="Удалить"
+      danger
+      @confirm="confirmDelete"
+      @cancel="pendingDelete = null"
+    />
+  </div>
 </template>
 
 <style scoped lang="scss">
-.home {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: space(8) space(4);
+.notes {
   display: grid;
-  gap: space(3);
+  gap: space(6);
+
+  &__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: space(3);
+  }
+
+  &__grid {
+    display: grid;
+    gap: space(4);
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
+    @include breakpoint-down('sm') {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 </style>

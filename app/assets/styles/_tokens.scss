@@ -183,42 +183,46 @@ $breakpoint: (
 $container-max: 880px;
 
 // ----------------------------------------------------------------------------
-// Emit CSS custom properties
+// CSS custom property emission. Defining a mixin emits nothing on its own —
+// main.scss calls this exactly once so tokens don't leak into every component
+// chunk.
 // ----------------------------------------------------------------------------
-:root {
-  @each $name, $value in $semantic-light {
-    --#{$name}: #{$value};
-  }
-
-  @each $step, $value in $space {
-    --space-#{$step}: #{$value};
-  }
-  @each $name, $value in $font-size {
-    --font-size-#{$name}: #{$value};
-  }
-  @each $name, $value in $font-weight {
-    --font-weight-#{$name}: #{$value};
-  }
-  @each $name, $value in $radius {
-    --radius-#{$name}: #{$value};
-  }
-  @each $name, $value in $shadow {
-    --shadow-#{$name}: #{$value};
-  }
-
-  --font-family-base: #{$font-family-base};
-  --font-family-mono: #{$font-family-mono};
-  --line-height-tight: #{map-get($line-height, 'tight')};
-  --line-height-normal: #{map-get($line-height, 'normal')};
-  --transition-fast: #{$transition-fast};
-  --transition-base: #{$transition-base};
-  --container-max: #{$container-max};
-}
-
-@media (prefers-color-scheme: dark) {
+@mixin emit-design-tokens {
   :root {
-    @each $name, $value in $semantic-dark {
+    @each $name, $value in $semantic-light {
       --#{$name}: #{$value};
+    }
+
+    @each $step, $value in $space {
+      --space-#{$step}: #{$value};
+    }
+    @each $name, $value in $font-size {
+      --font-size-#{$name}: #{$value};
+    }
+    @each $name, $value in $font-weight {
+      --font-weight-#{$name}: #{$value};
+    }
+    @each $name, $value in $radius {
+      --radius-#{$name}: #{$value};
+    }
+    @each $name, $value in $shadow {
+      --shadow-#{$name}: #{$value};
+    }
+
+    --font-family-base: #{$font-family-base};
+    --font-family-mono: #{$font-family-mono};
+    --line-height-tight: #{map-get($line-height, 'tight')};
+    --line-height-normal: #{map-get($line-height, 'normal')};
+    --transition-fast: #{$transition-fast};
+    --transition-base: #{$transition-base};
+    --container-max: #{$container-max};
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      @each $name, $value in $semantic-dark {
+        --#{$name}: #{$value};
+      }
     }
   }
 }

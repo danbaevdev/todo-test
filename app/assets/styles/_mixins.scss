@@ -1,4 +1,5 @@
 // Shared SCSS mixins. Available in every component via nuxt.config additionalData.
+@use './tokens' as *;
 
 @mixin breakpoint-up($name) {
   $value: map-get($breakpoint, $name);

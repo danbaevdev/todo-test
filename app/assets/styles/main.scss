@@ -1,6 +1,8 @@
 // Global stylesheet: modern reset + base element styles built on design tokens.
 // Token partials are auto-injected by nuxt.config (additionalData).
 
+@include emit-design-tokens;
+
 *,
 *::before,
 *::after {
