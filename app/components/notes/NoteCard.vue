@@ -20,7 +20,7 @@ const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
     <TodoPreviewList :todos="note.todos" :max="3" />
 
     <div class="note-card__actions">
-      <NuxtLink :to="`/notes/${note.id}`" class="note-card__edit">Редактировать</NuxtLink>
+      <Button :to="`/notes/${note.id}`" variant="ghost">Редактировать</Button>
       <Button variant="danger" @click="emit('delete')">Удалить</Button>
     </div>
   </article>
@@ -60,10 +60,5 @@ const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
   justify-content: space-between;
   gap: var(--space-2);
   margin-top: var(--space-1);
-}
-
-.note-card__edit {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
 }
 </style>

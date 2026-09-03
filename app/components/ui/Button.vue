@@ -4,13 +4,23 @@ withDefaults(
     variant?: 'primary' | 'ghost' | 'danger'
     type?: 'button' | 'submit'
     disabled?: boolean
+    /** When set, the button renders as a router link with button styling. */
+    to?: string
   }>(),
   { variant: 'ghost', type: 'button', disabled: false },
 )
 </script>
 
 <template>
+  <NuxtLink
+    v-if="to && !disabled"
+    :to="to"
+    :class="['btn', `btn--${variant}`]"
+  >
+    <slot />
+  </NuxtLink>
   <button
+    v-else
     :type="type"
     :disabled="disabled"
     :class="['btn', `btn--${variant}`]"
@@ -32,7 +42,12 @@ withDefaults(
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   line-height: 1;
+  text-decoration: none;
   transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn:hover {
+  text-decoration: none;
 }
 
 .btn:disabled {
