@@ -91,26 +91,15 @@ function confirmPending() {
 }
 
 // --- Todo actions -> history -------------------------------------------
-/** Id of a just-added, still-untouched row (drop it if it's abandoned empty). */
-const pristineNewId = ref<string | null>(null)
+/** Id of the last-added row, so it can be autofocused. */
+const lastAddedId = ref<string | null>(null)
 
 function onEditText(todoId: string, value: string) {
   history.setTodoText(todoId, value)
-  if (todoId === pristineNewId.value) pristineNewId.value = null
 }
 
 function addTodo() {
-  pristineNewId.value = history.addTodo()
-}
-
-function onTodoBlur(todoId: string) {
-  history.seal()
-  const todo = note.value.todos.find((t) => t.id === todoId)
-  // A freshly added row the user never typed into → remove it on blur.
-  if (todoId === pristineNewId.value && todo && todo.text.trim() === '') {
-    history.removeTodo(todoId)
-  }
-  pristineNewId.value = null
+  lastAddedId.value = history.addTodo()
 }
 
 /** Go back if we came from somewhere in the app, otherwise to the notes list. */
@@ -151,11 +140,11 @@ function goBack() {
       <h2>Пункты</h2>
       <TodoEditorList
         :todos="note.todos"
-        :autofocus-id="pristineNewId"
+        :autofocus-id="lastAddedId"
         @toggle="history.toggleTodo($event)"
         @edit-text="onEditText"
         @pause="history.seal"
-        @commit="onTodoBlur"
+        @commit="history.seal"
         @remove="history.removeTodo($event)"
         @add="addTodo"
       />

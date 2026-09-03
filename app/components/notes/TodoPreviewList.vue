@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { previewTodos } from '~/utils/note'
 import type { Todo } from '~/types/note'
 
 const props = withDefaults(
@@ -7,17 +8,16 @@ const props = withDefaults(
   { max: 3 },
 )
 
-const visible = computed(() => props.todos.slice(0, props.max))
-const hiddenCount = computed(() => Math.max(0, props.todos.length - props.max))
+const preview = computed(() => previewTodos(props.todos, props.max))
 </script>
 
 <template>
   <div class="preview">
-    <ul v-if="visible.length" class="preview__list">
-      <TodoPreviewItem v-for="todo in visible" :key="todo.id" :todo="todo" />
+    <ul v-if="preview.visible.length" class="preview__list">
+      <TodoPreviewItem v-for="todo in preview.visible" :key="todo.id" :todo="todo" />
     </ul>
     <p v-else class="preview__empty">Нет пунктов</p>
-    <p v-if="hiddenCount" class="preview__more">и ещё {{ hiddenCount }}…</p>
+    <p v-if="preview.hiddenCount" class="preview__more">и ещё {{ preview.hiddenCount }}</p>
   </div>
 </template>
 
