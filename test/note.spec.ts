@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { previewTodos, sanitizeNoteContent } from '~/utils/note'
+import { noteTitle, previewTodos, sanitizeNoteContent } from '~/utils/note'
 import type { Todo } from '~/types/note'
 
 const todos = (n: number): Todo[] =>
@@ -39,6 +39,22 @@ describe('sanitizeNoteContent', () => {
     sanitizeNoteContent(input)
     expect(input.title).toBe(' a ')
     expect(input.todos[0]!.text).toBe(' b ')
+  })
+})
+
+describe('noteTitle', () => {
+  it('uses the trimmed title when present', () => {
+    expect(noteTitle({ title: '  Покупки  ', createdAt: 0 })).toBe('Покупки')
+  })
+
+  it('falls back to the creation date when there is no title', () => {
+    const createdAt = new Date(2026, 11, 12).getTime()
+    expect(noteTitle({ title: '', createdAt })).toBe('Заметка от 12.12.2026')
+    expect(noteTitle({ title: '   ', createdAt })).toBe('Заметка от 12.12.2026')
+  })
+
+  it('tolerates a missing createdAt', () => {
+    expect(noteTitle({ title: '', createdAt: NaN })).toMatch(/^Заметка от \d{2}\.\d{2}\.\d{4}$/)
   })
 })
 

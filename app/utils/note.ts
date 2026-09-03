@@ -1,8 +1,19 @@
-import type { Todo } from '~/types/note'
+import type { Note, Todo } from '~/types/note'
 
 export interface NoteContent {
   title: string
   todos: Todo[]
+}
+
+/**
+ * Title to display for a note. Falls back to the creation date when the note
+ * has no title of its own ("Заметка от 12.12.2026").
+ */
+export function noteTitle(note: Pick<Note, 'title' | 'createdAt'>): string {
+  const trimmed = note.title.trim()
+  if (trimmed) return trimmed
+  const ts = Number.isFinite(note.createdAt) ? note.createdAt : Date.now()
+  return `Заметка от ${new Date(ts).toLocaleDateString('ru-RU')}`
 }
 
 /**

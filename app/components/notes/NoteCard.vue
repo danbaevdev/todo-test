@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { noteTitle } from '~/utils/note'
 import type { Note } from '~/types/note'
 
 const props = defineProps<{ note: Note }>()
 const emit = defineEmits<{ delete: [] }>()
 
 const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
+const title = computed(() => noteTitle(props.note))
+const isUntitled = computed(() => !props.note.title.trim())
 </script>
 
 <template>
@@ -13,9 +16,9 @@ const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
     <div class="note-card__head">
       <h2
         class="note-card__title line-clamp-2"
-        :class="{ 'note-card__title--untitled': !note.title.trim() }"
+        :class="{ 'note-card__title--untitled': isUntitled }"
       >
-        {{ note.title.trim() || 'Без названия' }}
+        {{ title }}
       </h2>
       <span v-if="note.todos.length" class="note-card__count">
         {{ doneCount }} / {{ note.todos.length }}
