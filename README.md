@@ -4,6 +4,9 @@ SPA-приложение для заметок со списками задач.
 Без UI-библиотек и без препроцессоров — вёрстка, модальные окна и дизайн-система
 собственные, на чистом CSS с custom properties.
 
+**Демо:** https://danbaevdev.github.io/todo-test/ — деплой автоматический на каждый пуш
+в `main` (см. [Деплой](#деплой-github-pages)).
+
 ## Возможности
 
 - **Главная** — список заметок с сокращённым превью Todo, создание / переход к редактированию / удаление (с подтверждением).
@@ -70,12 +73,16 @@ docker-compose up --build
 
 ## Деплой (GitHub Pages)
 
-Пуш в `main` → workflow `.github/workflows/deploy.yml` прогоняет линт/тесты,
-делает `nuxt generate` с `NUXT_APP_BASE_URL=/todo-test/` и публикует
-`.output/public` на Pages.
+**Автоматически на каждый пуш в `main`** (и вручную через `workflow_dispatch`).
+Workflow `.github/workflows/deploy.yml`:
 
-Один раз включить в репозитории: **Settings → Pages → Build and deployment →
-Source: GitHub Actions**.
+1. `npm ci`
+2. `npm run lint` + `npm run lint:style` + `npm run test`
+3. `nuxt generate` с `NUXT_APP_BASE_URL=/todo-test/`
+4. `touch .output/public/.nojekyll` (иначе Jekyll режет папку `_nuxt/`)
+5. публикация `.output/public` на Pages
 
-Живёт на `https://danbaevdev.github.io/todo-test/`. Deep-ссылки работают —
-`nuxt generate` кладёт `404.html` = SPA-оболочку.
+Pages уже включён (Source: GitHub Actions). Deep-ссылки работают — `nuxt generate`
+кладёт `404.html` = SPA-оболочку, GH Pages отдаёт её на неизвестных путях.
+
+→ https://danbaevdev.github.io/todo-test/
