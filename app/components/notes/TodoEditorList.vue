@@ -7,7 +7,8 @@ const emit = defineEmits<{
   toggle: [string]
   editText: [string, string]
   pause: []
-  commit: []
+  /** A todo field lost focus — carries the todo id. */
+  commit: [string]
   remove: [string]
   add: []
 }>()
@@ -24,7 +25,7 @@ const emit = defineEmits<{
         @toggle="emit('toggle', todo.id)"
         @edit-text="emit('editText', todo.id, $event)"
         @pause="emit('pause')"
-        @commit="emit('commit')"
+        @commit="emit('commit', todo.id)"
         @remove="emit('remove', todo.id)"
       />
     </ul>

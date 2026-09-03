@@ -11,8 +11,6 @@
   gap: var(--space-1);
   padding: var(--space-12) var(--space-4);
   text-align: center;
-  border: 1px dashed var(--color-border-strong);
-  border-radius: var(--radius-lg);
 }
 
 .empty__title {

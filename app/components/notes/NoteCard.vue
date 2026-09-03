@@ -11,7 +11,12 @@ const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
 <template>
   <article class="note-card">
     <div class="note-card__head">
-      <h2 class="note-card__title line-clamp-2">{{ note.title || 'Без названия' }}</h2>
+      <h2
+        class="note-card__title line-clamp-2"
+        :class="{ 'note-card__title--untitled': !note.title.trim() }"
+      >
+        {{ note.title.trim() || 'Без названия' }}
+      </h2>
       <span v-if="note.todos.length" class="note-card__count">
         {{ doneCount }} / {{ note.todos.length }}
       </span>
@@ -47,6 +52,11 @@ const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
 
 .note-card__title {
   font-size: var(--font-size-lg);
+}
+
+.note-card__title--untitled {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
 }
 
 .note-card__count {

@@ -4,6 +4,7 @@ import { useEditHistory } from '~/composables/useEditHistory'
 import { useNoteDraft } from '~/composables/useNoteDraft'
 import { useUndoRedoShortcuts } from '~/composables/useUndoRedoShortcuts'
 import { useNotesStore } from '~/stores/notes'
+import { sanitizeNoteContent } from '~/utils/note'
 import type { Note } from '~/types/note'
 
 const route = useRoute()
@@ -71,10 +72,7 @@ function leave() {
 
 function save() {
   history.seal()
-  const payload = {
-    title: note.value.title.trim(),
-    todos: note.value.todos.map((t) => ({ ...t, text: t.text.trim() })),
-  }
+  const payload = sanitizeNoteContent(note.value)
   const ok = store.updateNote(id, payload)
   if (!ok) store.createNote(payload) // was deleted elsewhere — re-create
   store.flush()
@@ -93,14 +91,26 @@ function confirmPending() {
 }
 
 // --- Todo actions -> history -------------------------------------------
-const lastAddedId = ref<string | null>(null)
+/** Id of a just-added, still-untouched row (drop it if it's abandoned empty). */
+const pristineNewId = ref<string | null>(null)
 
 function onEditText(todoId: string, value: string) {
   history.setTodoText(todoId, value)
+  if (todoId === pristineNewId.value) pristineNewId.value = null
 }
 
 function addTodo() {
-  lastAddedId.value = history.addTodo()
+  pristineNewId.value = history.addTodo()
+}
+
+function onTodoBlur(todoId: string) {
+  history.seal()
+  const todo = note.value.todos.find((t) => t.id === todoId)
+  // A freshly added row the user never typed into → remove it on blur.
+  if (todoId === pristineNewId.value && todo && todo.text.trim() === '') {
+    history.removeTodo(todoId)
+  }
+  pristineNewId.value = null
 }
 
 /** Go back if we came from somewhere in the app, otherwise to the notes list. */
@@ -141,11 +151,11 @@ function goBack() {
       <h2>Пункты</h2>
       <TodoEditorList
         :todos="note.todos"
-        :autofocus-id="lastAddedId"
+        :autofocus-id="pristineNewId"
         @toggle="history.toggleTodo($event)"
         @edit-text="onEditText"
         @pause="history.seal"
-        @commit="history.seal"
+        @commit="onTodoBlur"
         @remove="history.removeTodo($event)"
         @add="addTodo"
       />

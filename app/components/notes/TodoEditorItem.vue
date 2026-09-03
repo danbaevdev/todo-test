@@ -28,7 +28,6 @@ const emit = defineEmits<{
       :model-value="todo.text"
       placeholder="Текст пункта"
       aria-label="Текст пункта"
-      :invalid="todo.text.trim() === ''"
       @update:model-value="emit('editText', $event)"
       @pause="emit('pause')"
       @commit="emit('commit')"
