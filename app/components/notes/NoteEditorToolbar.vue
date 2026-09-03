@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ariaKeyshortcuts, formatShortcut } from '~/utils/platform'
+
 defineProps<{
   canUndo: boolean
   canRedo: boolean
@@ -12,17 +14,49 @@ const emit = defineEmits<{
   undo: []
   redo: []
 }>()
+
+const undoShortcut = { key: 'Z' } as const
+const redoShortcut = { key: 'Z', shift: true } as const
+const undoHint = formatShortcut(undoShortcut)
+const redoHint = formatShortcut(redoShortcut)
 </script>
 
 <template>
   <div class="toolbar">
     <div class="toolbar__history">
-      <Button icon variant="outline" label="Отменить (Ctrl+Z)" :disabled="!canUndo" @click="emit('undo')">
-        <Icon name="undo" />
-      </Button>
-      <Button icon variant="outline" label="Повторить (Shift+Ctrl+Z)" :disabled="!canRedo" @click="emit('redo')">
-        <Icon name="redo" />
-      </Button>
+      <Tooltip placement="bottom">
+        <Button
+          icon
+          no-title
+          variant="outline"
+          label="Отменить"
+          :aria-keyshortcuts="ariaKeyshortcuts(undoShortcut)"
+          :disabled="!canUndo"
+          @click="emit('undo')"
+        >
+          <Icon name="undo" />
+        </Button>
+        <template #content>
+          <span class="toolbar__hint">Отменить <kbd>{{ undoHint }}</kbd></span>
+        </template>
+      </Tooltip>
+
+      <Tooltip placement="bottom">
+        <Button
+          icon
+          no-title
+          variant="outline"
+          label="Повторить"
+          :aria-keyshortcuts="ariaKeyshortcuts(redoShortcut)"
+          :disabled="!canRedo"
+          @click="emit('redo')"
+        >
+          <Icon name="redo" />
+        </Button>
+        <template #content>
+          <span class="toolbar__hint">Повторить <kbd>{{ redoHint }}</kbd></span>
+        </template>
+      </Tooltip>
     </div>
 
     <div class="toolbar__main">
@@ -52,5 +86,20 @@ const emit = defineEmits<{
 
 .toolbar__main {
   flex-wrap: wrap;
+}
+
+.toolbar__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+.toolbar__hint kbd {
+  font-family: var(--font-family-base);
+  font-size: 0.9em;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-bg) 20%, transparent);
 }
 </style>

@@ -13,6 +13,8 @@ const props = withDefaults(
     icon?: boolean
     /** Accessible name — required when `icon`. */
     label?: string
+    /** Suppress the native `title` (e.g. when a Tooltip provides the hint). */
+    noTitle?: boolean
     type?: 'button' | 'submit'
     disabled?: boolean
     /** When set, renders as a router link with button styling. */
@@ -31,7 +33,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
     :type="isLink ? undefined : type"
     :disabled="isLink ? undefined : disabled"
     :aria-label="icon ? label : undefined"
-    :title="icon ? label : undefined"
+    :title="icon && !noTitle ? label : undefined"
     :class="['btn', `btn--${variant}`, `btn--${color}`, `btn--${size}`, { 'btn--icon': icon }]"
   >
     <slot />
