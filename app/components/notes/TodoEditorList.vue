@@ -30,14 +30,14 @@ const emit = defineEmits<{
     </ul>
     <p v-else class="todo-list__empty">Пунктов пока нет.</p>
 
-    <Button variant="ghost" @click="emit('add')">+ Добавить пункт</Button>
+    <Button variant="outline" @click="emit('add')">+ Добавить пункт</Button>
   </div>
 </template>
 
 <style scoped>
 .todo-list {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-6);
 }
 
 .todo-list__items {

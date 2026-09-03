@@ -1,7 +1,7 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    variant?: 'primary' | 'ghost' | 'danger'
+    variant?: 'primary' | 'ghost' | 'outline' | 'danger'
     type?: 'button' | 'submit'
     disabled?: boolean
     /** When set, the button renders as a router link with button styling. */
@@ -64,12 +64,20 @@ withDefaults(
 }
 
 .btn--ghost {
-  background: var(--color-surface);
-  border-color: var(--color-border-strong);
+  background: transparent;
   color: var(--color-text);
 }
 .btn--ghost:not(:disabled):hover {
-  background: var(--color-surface-alt);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.btn--outline {
+  background: transparent;
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+.btn--outline:not(:disabled):hover {
+  background: color-mix(in srgb, currentColor 8%, transparent);
 }
 
 .btn--danger {

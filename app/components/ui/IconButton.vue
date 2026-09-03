@@ -45,8 +45,13 @@ withDefaults(
 }
 
 .icon-button:not(:disabled):hover {
-  background: var(--color-surface-alt);
   color: var(--color-text);
+}
+.icon-button--default:not(:disabled):hover {
+  background: var(--color-surface-alt);
+}
+.icon-button--ghost:not(:disabled):hover {
+  background: color-mix(in srgb, currentColor 10%, transparent);
 }
 
 .icon-button:disabled {
