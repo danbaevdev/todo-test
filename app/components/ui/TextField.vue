@@ -65,13 +65,14 @@ onBeforeUnmount(() => emitPause.cancel())
 <style scoped lang="scss">
 .field {
   width: 100%;
-  padding: space(2) space(3);
+  // Single-line inputs match Button / IconButton height.
+  min-height: var(--control-height);
+  padding: space(1) space(3);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
-  resize: vertical;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 
   &::placeholder { color: var(--color-text-muted); }
@@ -84,5 +85,10 @@ onBeforeUnmount(() => emitPause.cancel())
   &--invalid {
     border-color: var(--color-danger);
   }
+}
+
+textarea.field {
+  padding-block: space(2);
+  resize: vertical;
 }
 </style>
