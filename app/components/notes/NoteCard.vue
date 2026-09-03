@@ -57,7 +57,6 @@ const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
 .note-card__actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-2);
   margin-top: var(--space-1);
 }

@@ -102,10 +102,21 @@ function onEditText(todoId: string, value: string) {
 function addTodo() {
   lastAddedId.value = history.addTodo()
 }
+
+/** Go back if we came from somewhere in the app, otherwise to the notes list. */
+function goBack() {
+  if (typeof router.options.history.state.back === 'string') router.back()
+  else router.push('/')
+}
 </script>
 
 <template>
   <div class="editor">
+    <Button class="editor__back" variant="ghost" @click="goBack">
+      <IconArrowLeft :size="16" />
+      Все заметки
+    </Button>
+
     <NoteEditorToolbar
       :can-undo="canUndo"
       :can-redo="canRedo"
@@ -176,6 +187,13 @@ function addTodo() {
 .editor {
   display: grid;
   gap: var(--space-5);
+}
+
+/* Ghost button pulled left by its own inline padding so the label sits on the grid edge. */
+.editor__back {
+  justify-self: start;
+  margin-left: calc(var(--space-4) * -1);
+  color: var(--color-text-muted);
 }
 
 .editor__todos {
