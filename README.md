@@ -1,7 +1,8 @@
 # Заметки & Todo
 
 SPA-приложение для заметок со списками задач. Nuxt 4, Composition API, TypeScript strict.
-Без UI-библиотек — вёрстка, модальные окна и дизайн-система собственные (SCSS).
+Без UI-библиотек и без препроцессоров — вёрстка, модальные окна и дизайн-система
+собственные, на чистом CSS с custom properties.
 
 ## Возможности
 
@@ -29,7 +30,7 @@ SPA-приложение для заметок со списками задач.
 | Глобальные Ctrl+Z / Shift+Ctrl+Z | `app/composables/useUndoRedoShortcuts.ts` |
 | Автосохранение черновика | `app/composables/useNoteDraft.ts` |
 | Focus-trap | `app/composables/useFocusTrap.ts` |
-| Дизайн-токены (SCSS + CSS custom properties, тема) | `app/assets/styles/` |
+| Дизайн-токены (CSS custom properties, светлая/тёмная тема) + `.container` | `app/assets/styles/tokens.css`, `base.css` |
 | UI-примитивы | `app/components/ui/` |
 | Доменные компоненты | `app/components/notes/` |
 
