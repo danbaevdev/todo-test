@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { noteTitle, previewTodos, sanitizeNoteContent } from '~/utils/note'
+import { isNoteEmpty, noteTitle, previewTodos, sanitizeNoteContent } from '~/utils/note'
 import type { Todo } from '~/types/note'
 
 const todos = (n: number): Todo[] =>
@@ -44,17 +44,47 @@ describe('sanitizeNoteContent', () => {
 
 describe('noteTitle', () => {
   it('uses the trimmed title when present', () => {
-    expect(noteTitle({ title: '  Покупки  ', createdAt: 0 })).toBe('Покупки')
+    expect(noteTitle({ title: '  Покупки  ', todos: [] })).toEqual({
+      text: 'Покупки',
+      isFallback: false,
+      fromTodoId: null,
+    })
   })
 
-  it('falls back to the creation date when there is no title', () => {
-    const createdAt = new Date(2026, 11, 12).getTime()
-    expect(noteTitle({ title: '', createdAt })).toBe('Заметка от 12.12.2026')
-    expect(noteTitle({ title: '   ', createdAt })).toBe('Заметка от 12.12.2026')
+  it('borrows the first non-empty todo when there is no title', () => {
+    expect(
+      noteTitle({
+        title: '',
+        todos: [
+          { id: 'a', text: '  ', done: false },
+          { id: 'b', text: ' Купить молоко ', done: false },
+          { id: 'c', text: 'Хлеб', done: false },
+        ],
+      }),
+    ).toEqual({ text: 'Купить молоко', isFallback: true, fromTodoId: 'b' })
   })
 
-  it('tolerates a missing createdAt', () => {
-    expect(noteTitle({ title: '', createdAt: NaN })).toMatch(/^Заметка от \d{2}\.\d{2}\.\d{4}$/)
+  it('falls back to a placeholder when there is nothing at all', () => {
+    expect(noteTitle({ title: '', todos: [{ id: 'a', text: '', done: false }] })).toEqual({
+      text: 'Без названия',
+      isFallback: true,
+      fromTodoId: null,
+    })
+  })
+})
+
+describe('isNoteEmpty', () => {
+  it('is true with no title and no todo text', () => {
+    expect(isNoteEmpty({ title: '  ', todos: [] })).toBe(true)
+    expect(isNoteEmpty({ title: '', todos: [{ id: 'a', text: '   ', done: false }] })).toBe(true)
+  })
+
+  it('is false with a title', () => {
+    expect(isNoteEmpty({ title: 'X', todos: [] })).toBe(false)
+  })
+
+  it('is false with any todo text', () => {
+    expect(isNoteEmpty({ title: '', todos: [{ id: 'a', text: 'y', done: false }] })).toBe(false)
   })
 })
 

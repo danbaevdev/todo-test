@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { onBeforeRouteLeave } from 'vue-router'
 import { useEditHistory } from '~/composables/useEditHistory'
 import { useNoteDraft } from '~/composables/useNoteDraft'
 import { useUndoRedoShortcuts } from '~/composables/useUndoRedoShortcuts'
 import { useNotesStore } from '~/stores/notes'
-import { sanitizeNoteContent } from '~/utils/note'
+import { isNoteEmpty, sanitizeNoteContent } from '~/utils/note'
 import type { Note } from '~/types/note'
 
 const route = useRoute()
@@ -65,18 +66,30 @@ useUndoRedoShortcuts({
   enabled: () => !anyModalOpen.value,
 })
 
-function leave() {
+/**
+ * On the way out: forget the draft, and drop the note entirely if it never
+ * got a title or a single todo — an empty note isn't worth keeping (Apple Notes
+ * behaves the same way).
+ */
+onBeforeRouteLeave(() => {
   draft.clear()
+  if (store.hasNote(id) && isNoteEmpty(note.value)) {
+    store.deleteNote(id)
+  }
+  store.flush()
+})
+
+function leave() {
   router.push('/')
 }
 
 function save() {
   history.seal()
-  const payload = sanitizeNoteContent(note.value)
-  const ok = store.updateNote(id, payload)
-  if (!ok) store.createNote(payload) // was deleted elsewhere — re-create
-  store.flush()
-  leave()
+  if (!isNoteEmpty(note.value)) {
+    const payload = sanitizeNoteContent(note.value)
+    if (!store.updateNote(id, payload)) store.createNote(payload) // deleted elsewhere
+  }
+  leave() // the route guard persists / discards
 }
 
 function requestCancel() {

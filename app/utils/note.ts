@@ -5,15 +5,35 @@ export interface NoteContent {
   todos: Todo[]
 }
 
+export interface DisplayTitle {
+  text: string
+  /** true when `text` is not the note's own title (derived / placeholder). */
+  isFallback: boolean
+  /** id of the todo borrowed as the title, so a preview can skip it. */
+  fromTodoId: string | null
+}
+
 /**
- * Title to display for a note. Falls back to the creation date when the note
- * has no title of its own ("Заметка от 12.12.2026").
+ * What to show as a note's title:
+ *   1. its own title, if any
+ *   2. otherwise the first non-empty todo's text (like Apple Notes)
+ *   3. otherwise a muted placeholder (such a note isn't kept once you leave it)
  */
-export function noteTitle(note: Pick<Note, 'title' | 'createdAt'>): string {
+export function noteTitle(note: Pick<Note, 'title' | 'todos'>): DisplayTitle {
   const trimmed = note.title.trim()
-  if (trimmed) return trimmed
-  const ts = Number.isFinite(note.createdAt) ? note.createdAt : Date.now()
-  return `Заметка от ${new Date(ts).toLocaleDateString('ru-RU')}`
+  if (trimmed) return { text: trimmed, isFallback: false, fromTodoId: null }
+
+  const firstFilled = note.todos.find((t) => t.text.trim() !== '')
+  if (firstFilled) {
+    return { text: firstFilled.text.trim(), isFallback: true, fromTodoId: firstFilled.id }
+  }
+
+  return { text: 'Без названия', isFallback: true, fromTodoId: null }
+}
+
+/** A note with neither a title nor any todo text — nothing worth persisting. */
+export function isNoteEmpty(note: Pick<Note, 'title' | 'todos'>): boolean {
+  return !note.title.trim() && !note.todos.some((t) => t.text.trim() !== '')
 }
 
 /**
