@@ -7,6 +7,8 @@ const props = withDefaults(
     variant?: 'solid' | 'outline' | 'ghost'
     /** Semantic color. */
     color?: 'neutral' | 'primary' | 'danger'
+    /** Control size. */
+    size?: 'sm' | 'md' | 'lg'
     /** Icon-only button: square-ish, needs `label` for its accessible name. */
     icon?: boolean
     /** Accessible name — required when `icon`. */
@@ -16,7 +18,7 @@ const props = withDefaults(
     /** When set, renders as a router link with button styling. */
     to?: string
   }>(),
-  { variant: 'solid', color: 'neutral', icon: false, type: 'button', disabled: false },
+  { variant: 'solid', color: 'neutral', size: 'md', icon: false, type: 'button', disabled: false },
 )
 
 const isLink = computed(() => !!props.to && !props.disabled)
@@ -30,7 +32,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
     :disabled="isLink ? undefined : disabled"
     :aria-label="icon ? label : undefined"
     :title="icon ? label : undefined"
-    :class="['btn', `btn--${variant}`, `btn--${color}`, { 'btn--icon': icon }]"
+    :class="['btn', `btn--${variant}`, `btn--${color}`, `btn--${size}`, { 'btn--icon': icon }]"
   >
     <slot />
   </component>
@@ -38,23 +40,28 @@ const isLink = computed(() => !!props.to && !props.disabled)
 
 <style scoped>
 .btn {
+  --icon-h: var(--control-height);
+  --icon-glyph: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-height: var(--control-height);
-  padding: var(--space-1) var(--space-4);
   border: 1px solid transparent;
   border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   line-height: 1;
   text-decoration: none;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast),
+    color var(--transition-fast), transform var(--transition-fast);
 }
 
 .btn:hover {
   text-decoration: none;
+}
+
+/* Press feedback — every variant nudges down a hair. */
+.btn:not(:disabled):active {
+  transform: translateY(1px);
 }
 
 .btn:disabled {
@@ -62,14 +69,40 @@ const isLink = computed(() => !!props.to && !props.disabled)
   cursor: not-allowed;
 }
 
-/* Icon-only: same height as a text button, a touch wider than tall. */
+/* --- Size --------------------------------------------------------------- */
+.btn--sm {
+  --icon-h: var(--control-height-sm);
+  --icon-glyph: 16px;
+  min-height: var(--control-height-sm);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+}
+.btn--md {
+  min-height: var(--control-height);
+  padding: var(--space-1) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+.btn--lg {
+  --icon-h: var(--control-height-lg);
+  --icon-glyph: 20px;
+  min-height: var(--control-height-lg);
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--font-size-md);
+}
+
+/* Icon-only: square-ish, a touch wider than tall; never shrinks in a flex row. */
 .btn--icon {
   gap: 0;
   min-height: 0;
-  height: var(--control-height);
-  width: calc(var(--control-height) + var(--space-2));
+  height: var(--icon-h);
+  width: calc(var(--icon-h) + var(--space-2));
   padding: 0;
   border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+.btn--icon :slotted(svg) {
+  width: var(--icon-glyph);
+  height: var(--icon-glyph);
 }
 
 /* --- Color: exposes role tokens the variants consume ---------------------- */
@@ -103,6 +136,9 @@ const isLink = computed(() => !!props.to && !props.disabled)
 .btn--solid:not(:disabled):hover {
   background: var(--c-solid-bg-hover);
 }
+.btn--solid:not(:disabled):active {
+  background: color-mix(in srgb, var(--c-solid-bg-hover) 88%, #000);
+}
 
 .btn--outline {
   background: transparent;
@@ -112,6 +148,9 @@ const isLink = computed(() => !!props.to && !props.disabled)
 .btn--outline:not(:disabled):hover {
   background: color-mix(in srgb, var(--c-main) 10%, transparent);
 }
+.btn--outline:not(:disabled):active {
+  background: color-mix(in srgb, var(--c-main) 18%, transparent);
+}
 
 .btn--ghost {
   background: transparent;
@@ -119,5 +158,8 @@ const isLink = computed(() => !!props.to && !props.disabled)
 }
 .btn--ghost:not(:disabled):hover {
   background: color-mix(in srgb, var(--c-main) 10%, transparent);
+}
+.btn--ghost:not(:disabled):active {
+  background: color-mix(in srgb, var(--c-main) 18%, transparent);
 }
 </style>

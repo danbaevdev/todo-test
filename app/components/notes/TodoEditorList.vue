@@ -30,7 +30,9 @@ const emit = defineEmits<{
     </ul>
     <p v-else class="todo-list__empty">Пунктов пока нет.</p>
 
-    <Button variant="outline" @click="emit('add')">+ Добавить пункт</Button>
+    <Button class="todo-list__add" variant="outline" size="lg" @click="emit('add')">
+      + Добавить пункт
+    </Button>
   </div>
 </template>
 
@@ -38,6 +40,17 @@ const emit = defineEmits<{
 .todo-list {
   display: grid;
   gap: var(--space-4);
+}
+
+/* Full-width on phones; sits inline (content width) from tablet up. */
+.todo-list__add {
+  justify-self: stretch;
+}
+
+@media (min-width: 768px) {
+  .todo-list__add {
+    justify-self: start;
+  }
 }
 
 .todo-list__items {

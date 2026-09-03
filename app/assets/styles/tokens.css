@@ -57,7 +57,9 @@
 
   /* Layout */
   --container-max: 880px;
+  --control-height-sm: 28px;
   --control-height: 32px;
+  --control-height-lg: 40px;
 
   /* Semantic colors — light theme */
   --color-bg: #f7f8fa;
