@@ -54,9 +54,7 @@ onBeforeUnmount(() => {
         <header class="modal__header">
           <h2 :id="titleId" class="modal__title">{{ title }}</h2>
           <IconButton class="modal__close" label="Закрыть" variant="ghost" @click="emit('close')">
-            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            </svg>
+            <IconClose />
           </IconButton>
         </header>
         <div class="modal__body">

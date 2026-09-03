@@ -18,14 +18,10 @@ const emit = defineEmits<{
   <div class="toolbar">
     <div class="toolbar__history">
       <IconButton label="Отменить (Ctrl+Z)" :disabled="!canUndo" @click="emit('undo')">
-        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M8 5L3 9l5 4M3 9h9a5 5 0 010 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
+        <IconUndo :size="15" />
       </IconButton>
       <IconButton label="Повторить (Shift+Ctrl+Z)" :disabled="!canRedo" @click="emit('redo')">
-        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M12 5l5 4-5 4M17 9H8a5 5 0 000 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
+        <IconRedo :size="15" />
       </IconButton>
     </div>
 

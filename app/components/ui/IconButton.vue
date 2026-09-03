@@ -58,9 +58,4 @@ withDefaults(
   color: var(--color-danger);
   border-color: var(--color-danger);
 }
-
-.icon-button :slotted(svg) {
-  width: 18px;
-  height: 18px;
-}
 </style>

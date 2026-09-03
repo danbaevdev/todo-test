@@ -34,9 +34,7 @@ function onClick(event: MouseEvent) {
       @click="onClick"
     >
     <span class="checkbox__box" aria-hidden="true">
-      <svg viewBox="0 0 16 16" fill="none">
-        <path d="M3.5 8.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
+      <IconCheck :size="14" />
     </span>
     <span v-if="label || $slots.default" class="checkbox__label"><slot>{{ label }}</slot></span>
   </label>
@@ -73,11 +71,6 @@ function onClick(event: MouseEvent) {
   background: var(--color-surface);
   color: transparent;
   transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-}
-
-.checkbox__box svg {
-  width: 14px;
-  height: 14px;
 }
 
 .checkbox__input:checked + .checkbox__box {
