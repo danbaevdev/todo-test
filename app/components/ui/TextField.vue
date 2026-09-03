@@ -82,18 +82,24 @@ onBeforeUnmount(() => emitPause.cancel())
 }
 
 /* Light hover — skipped while focused so the focus state stays clean. */
-.field:hover:not(:focus-visible):not(.field--invalid) {
+.field:hover:not(:focus-visible) {
   border-color: color-mix(in srgb, var(--color-text) 25%, var(--color-border-strong));
   background: color-mix(in srgb, var(--color-text) 3%, var(--color-surface));
+}
+
+.field--invalid {
+  border-color: var(--color-danger);
+}
+
+/* Invalid keeps its red border on hover, just adds a faint red wash. */
+.field--invalid:hover:not(:focus-visible) {
+  border-color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 6%, var(--color-surface));
 }
 
 /* Outline comes from the global :focus-visible rule; just tint the border. */
 .field:focus-visible {
   border-color: var(--color-primary);
-}
-
-.field--invalid {
-  border-color: var(--color-danger);
 }
 
 textarea.field {
