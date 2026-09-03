@@ -37,6 +37,11 @@ function hasContent(): boolean {
   return !!slots.content || !!props.content
 }
 
+/** Touch devices have no hover and can't read a tooltip — the control speaks for itself. */
+function canHover(): boolean {
+  return typeof window === 'undefined' || window.matchMedia('(hover: hover)').matches
+}
+
 function place() {
   const trigger = triggerEl.value
   const tip = tipEl.value
@@ -81,7 +86,7 @@ function place() {
 }
 
 function show() {
-  if (props.disabled || !hasContent() || open.value) return
+  if (props.disabled || !hasContent() || open.value || !canHover()) return
   showTimer = setTimeout(() => {
     open.value = true
     nextTick(place)

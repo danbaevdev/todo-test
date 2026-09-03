@@ -22,7 +22,10 @@ function onClick(event: MouseEvent) {
 </script>
 
 <template>
-  <label class="checkbox" :class="{ 'checkbox--readonly': readonly }">
+  <label
+    class="checkbox"
+    :class="{ 'checkbox--readonly': readonly, 'checkbox--disabled': disabled }"
+  >
     <input
       type="checkbox"
       class="checkbox__input"
@@ -50,6 +53,17 @@ function onClick(event: MouseEvent) {
 
 .checkbox--readonly {
   cursor: default;
+}
+
+.checkbox--disabled {
+  cursor: not-allowed;
+}
+.checkbox--disabled .checkbox__box {
+  opacity: 0.5;
+  background: var(--color-surface-alt);
+}
+.checkbox--disabled .checkbox__label {
+  color: var(--color-text-muted);
 }
 
 .checkbox__input {
