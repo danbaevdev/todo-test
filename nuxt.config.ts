@@ -28,7 +28,15 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Заметки',
-      meta: [{name: 'viewport', content: 'width=device-width, initial-scale=1'}],
+      meta: [
+        {
+          name: 'viewport',
+          // maximum-scale/user-scalable=no: stop iOS from zooming the whole
+          // page when a field is focused. Fields are 16px so nothing is clipped.
+          content:
+            'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover',
+        },
+      ],
     },
   },
 })
