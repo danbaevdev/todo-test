@@ -37,7 +37,7 @@ const emit = defineEmits<{
 <style scoped>
 .todo-list {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--space-4);
 }
 
 .todo-list__items {

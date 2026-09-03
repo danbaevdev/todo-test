@@ -34,7 +34,7 @@ const emit = defineEmits<{
       @commit="emit('commit')"
     />
     <IconButton label="Удалить пункт" variant="danger" @click="emit('remove')">
-      <IconTrash />
+      <Icon name="trash" />
     </IconButton>
   </li>
 </template>

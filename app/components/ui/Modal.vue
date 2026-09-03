@@ -54,7 +54,7 @@ onBeforeUnmount(() => {
         <header class="modal__header">
           <h2 :id="titleId" class="modal__title">{{ title }}</h2>
           <IconButton class="modal__close" label="Закрыть" variant="ghost" @click="emit('close')">
-            <IconClose />
+            <Icon name="close" />
           </IconButton>
         </header>
         <div class="modal__body">

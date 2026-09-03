@@ -18,10 +18,10 @@ const emit = defineEmits<{
   <div class="toolbar">
     <div class="toolbar__history">
       <IconButton label="Отменить (Ctrl+Z)" :disabled="!canUndo" @click="emit('undo')">
-        <IconUndo :size="15" />
+        <Icon name="undo" :size="15" />
       </IconButton>
       <IconButton label="Повторить (Shift+Ctrl+Z)" :disabled="!canRedo" @click="emit('redo')">
-        <IconRedo :size="15" />
+        <Icon name="redo" :size="15" />
       </IconButton>
     </div>
 

@@ -34,7 +34,7 @@ function onClick(event: MouseEvent) {
       @click="onClick"
     >
     <span class="checkbox__box" aria-hidden="true">
-      <IconCheck :size="14" />
+      <Icon name="check" :size="14" />
     </span>
     <span v-if="label || $slots.default" class="checkbox__label"><slot>{{ label }}</slot></span>
   </label>
