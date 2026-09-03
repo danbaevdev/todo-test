@@ -4,7 +4,7 @@ withDefaults(
     /** Accessible name — the button has no visible text. */
     label: string
     disabled?: boolean
-    variant?: 'default' | 'danger'
+    variant?: 'default' | 'ghost' | 'danger'
   }>(),
   { disabled: false, variant: 'default' },
 )
@@ -32,11 +32,16 @@ withDefaults(
   height: var(--control-height);
   width: calc(var(--control-height) + var(--space-2));
   padding: 0;
-  border: 1px solid var(--color-border-strong);
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  background: var(--color-surface);
+  background: transparent;
   color: var(--color-text-muted);
   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.icon-button--default {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface);
 }
 
 .icon-button:not(:disabled):hover {
