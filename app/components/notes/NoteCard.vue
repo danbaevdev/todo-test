@@ -22,8 +22,23 @@ const title = computed(() => noteTitle(props.note))
     <TodoPreviewList :todos="note.todos" :max="3" />
 
     <div class="note-card__actions">
-      <Button :to="`/notes/${note.id}`" variant="outline">Редактировать</Button>
-      <Button color="danger" @click="emit('delete')">Удалить</Button>
+      <Button
+        :to="`/notes/${note.id}`"
+        :label="`Редактировать «${title}»`"
+        icon
+        variant="outline"
+      >
+        <Icon name="pencil" />
+      </Button>
+      <Button
+        :label="`Удалить «${title}»`"
+        icon
+        variant="outline"
+        color="danger"
+        @click="emit('delete')"
+      >
+        <Icon name="trash" />
+      </Button>
     </div>
   </article>
 </template>
@@ -61,6 +76,7 @@ const title = computed(() => noteTitle(props.note))
 .note-card__actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: var(--space-2);
   /* Pin to the bottom so action rows line up across cards of unequal height. */
   margin-top: auto;
