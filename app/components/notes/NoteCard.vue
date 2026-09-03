@@ -21,7 +21,7 @@ const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
 
     <div class="note-card__actions">
       <NuxtLink :to="`/notes/${note.id}`" class="note-card__edit">Редактировать</NuxtLink>
-      <BaseButton variant="danger" @click="emit('delete')">Удалить</BaseButton>
+      <Button variant="danger" @click="emit('delete')">Удалить</Button>
     </div>
   </article>
 </template>

@@ -182,6 +182,9 @@ $breakpoint: (
 
 $container-max: 880px;
 
+// Shared height for interactive controls (Button, IconButton, …) so they line up.
+$control-height: 32px;
+
 // ----------------------------------------------------------------------------
 // CSS custom property emission. Defining a mixin emits nothing on its own —
 // main.scss calls this exactly once so tokens don't leak into every component
@@ -216,6 +219,7 @@ $container-max: 880px;
     --transition-fast: #{$transition-fast};
     --transition-base: #{$transition-base};
     --container-max: #{$container-max};
+    --control-height: #{$control-height};
   }
 
   @media (prefers-color-scheme: dark) {

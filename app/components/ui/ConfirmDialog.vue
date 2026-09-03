@@ -14,13 +14,13 @@ const emit = defineEmits<{ confirm: []; cancel: [] }>()
 </script>
 
 <template>
-  <BaseModal :title="title" @close="emit('cancel')">
+  <Modal :title="title" @close="emit('cancel')">
     <p>{{ message }}</p>
     <template #footer>
-      <BaseButton variant="ghost" @click="emit('cancel')">{{ cancelLabel }}</BaseButton>
-      <BaseButton :variant="danger ? 'danger' : 'primary'" @click="emit('confirm')">
+      <Button variant="ghost" @click="emit('cancel')">{{ cancelLabel }}</Button>
+      <Button :variant="danger ? 'danger' : 'primary'" @click="emit('confirm')">
         {{ confirmLabel }}
-      </BaseButton>
+      </Button>
     </template>
-  </BaseModal>
+  </Modal>
 </template>

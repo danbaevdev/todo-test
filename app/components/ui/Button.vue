@@ -25,7 +25,8 @@ withDefaults(
   align-items: center;
   justify-content: center;
   gap: space(2);
-  padding: space(2) space(4);
+  min-height: var(--control-height);
+  padding: space(1) space(4);
   border: 1px solid transparent;
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);

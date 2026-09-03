@@ -1,6 +1,7 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
+    /** Accessible name — the button has no visible text. */
     label: string
     disabled?: boolean
     variant?: 'default' | 'danger'
@@ -12,8 +13,8 @@ withDefaults(
 <template>
   <button
     type="button"
-    class="icon-btn"
-    :class="`icon-btn--${variant}`"
+    class="icon-button"
+    :class="`icon-button--${variant}`"
     :disabled="disabled"
     :aria-label="label"
     :title="label"
@@ -23,17 +24,19 @@ withDefaults(
 </template>
 
 <style scoped lang="scss">
-.icon-btn {
+.icon-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  // Same height as Button; a touch wider than tall.
+  height: var(--control-height);
+  width: calc(var(--control-height) + var(--space-2));
+  padding: 0;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
   color: var(--color-text-muted);
-  transition: background-color var(--transition-fast), color var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 
   &:not(:disabled):hover {
     background: var(--color-surface-alt);

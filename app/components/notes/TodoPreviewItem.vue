@@ -6,7 +6,7 @@ defineProps<{ todo: Todo }>()
 
 <template>
   <li class="preview-item">
-    <BaseCheckbox :model-value="todo.done" readonly />
+    <Checkbox :model-value="todo.done" readonly />
     <span class="preview-item__text" :class="{ 'preview-item__text--done': todo.done }">
       {{ todo.text || 'Без текста' }}
     </span>

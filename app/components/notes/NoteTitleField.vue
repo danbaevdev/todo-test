@@ -10,7 +10,7 @@ const emit = defineEmits<{
 <template>
   <div class="title-field">
     <label class="title-field__label" for="note-title">Название заметки</label>
-    <BaseTextField
+    <TextField
       id="note-title"
       :model-value="modelValue"
       placeholder="Без названия"

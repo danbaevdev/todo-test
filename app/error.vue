@@ -12,9 +12,9 @@ defineProps<{ error: NuxtError }>()
         {{ error.statusCode === 404 ? 'Заметка не найдена' : 'Что-то пошло не так' }}
       </h1>
       <p class="error__hint">{{ error.statusMessage }}</p>
-      <BaseButton variant="primary" @click="clearError({ redirect: '/' })">
+      <Button variant="primary" @click="clearError({ redirect: '/' })">
         На главную
-      </BaseButton>
+      </Button>
     </div>
   </NuxtLayout>
 </template>

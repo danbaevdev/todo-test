@@ -23,8 +23,8 @@ const emit = defineEmits<{
 
 <template>
   <li ref="root" class="todo-item">
-    <BaseCheckbox :model-value="todo.done" @update:model-value="emit('toggle')" />
-    <BaseTextField
+    <Checkbox :model-value="todo.done" @update:model-value="emit('toggle')" />
+    <TextField
       :model-value="todo.text"
       placeholder="Текст пункта"
       aria-label="Текст пункта"
@@ -33,11 +33,11 @@ const emit = defineEmits<{
       @pause="emit('pause')"
       @commit="emit('commit')"
     />
-    <BaseIconButton label="Удалить пункт" variant="danger" @click="emit('remove')">
+    <IconButton label="Удалить пункт" variant="danger" @click="emit('remove')">
       <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path d="M4 6h12M8 6V4h4v2M6 6l1 10h6l1-10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
-    </BaseIconButton>
+    </IconButton>
   </li>
 </template>
 
