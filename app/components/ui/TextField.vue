@@ -76,8 +76,8 @@ onBeforeUnmount(() => emitPause.cancel())
 
   &::placeholder { color: var(--color-text-muted); }
 
+  // Outline comes from the global :focus-visible rule; just tint the border.
   &:focus-visible {
-    @include focus-ring;
     border-color: var(--color-primary);
   }
 

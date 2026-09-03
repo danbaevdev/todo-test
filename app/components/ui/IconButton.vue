@@ -53,8 +53,6 @@ withDefaults(
     border-color: var(--color-danger);
   }
 
-  @include focus-ring-visible;
-
   :slotted(svg) {
     width: 18px;
     height: 18px;

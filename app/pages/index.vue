@@ -67,11 +67,8 @@ function confirmDelete() {
   &__grid {
     display: grid;
     gap: space(4);
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-
-    @include breakpoint-down('sm') {
-      grid-template-columns: 1fr;
-    }
+    // auto-fill + minmax already collapses to one column on narrow screens
+    grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
   }
 }
 </style>

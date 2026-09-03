@@ -91,8 +91,6 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - #{space(8)});
-
-  &:focus-visible { @include focus-ring; }
 }
 
 .modal__header {
@@ -115,7 +113,6 @@ onBeforeUnmount(() => {
 
   svg { width: 18px; height: 18px; }
   &:hover { color: var(--color-text); }
-  @include focus-ring-visible;
 }
 
 .modal__body {

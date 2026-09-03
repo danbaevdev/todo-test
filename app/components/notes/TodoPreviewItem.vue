@@ -7,7 +7,7 @@ defineProps<{ todo: Todo }>()
 <template>
   <li class="preview-item">
     <Checkbox :model-value="todo.done" readonly />
-    <span class="preview-item__text" :class="{ 'preview-item__text--done': todo.done }">
+    <span class="preview-item__text line-clamp-1" :class="{ 'preview-item__text--done': todo.done }">
       {{ todo.text || 'Без текста' }}
     </span>
   </li>
@@ -23,7 +23,6 @@ defineProps<{ todo: Todo }>()
   &__text {
     font-size: var(--font-size-sm);
     color: var(--color-text);
-    @include line-clamp(1);
 
     &--done {
       text-decoration: line-through;

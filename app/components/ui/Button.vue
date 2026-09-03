@@ -39,8 +39,6 @@ withDefaults(
     cursor: not-allowed;
   }
 
-  @include focus-ring-visible;
-
   &--primary {
     background: var(--color-primary);
     color: var(--color-text-inverse);

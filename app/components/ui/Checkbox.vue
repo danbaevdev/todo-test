@@ -82,8 +82,10 @@ function onClick(event: MouseEvent) {
     color: var(--color-text-inverse);
   }
 
+  // The real input is visually hidden, so mirror the focus outline onto the box.
   &__input:focus-visible + &__box {
-    @include focus-ring;
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
   }
 
   &__label {
