@@ -1,21 +1,16 @@
 /**
- * Icon registry. To add an icon: drop one entry here (24px-ish stroke icon,
- * single `d`, `currentColor`) — no new component needed.
+ * Icon registry. Every glyph is drawn on the same 24×24 grid with a ~2px
+ * margin and 2px stroke (Feather / Lucide proportions), so they render at a
+ * consistent optical size. To add one: append its path `d` here.
  */
-export interface IconDef {
-  viewBox: string
-  d: string
-  /** Stroke width in the icon's own viewBox units. Default 1.6. */
-  strokeWidth?: number
-}
-
 export const ICONS = {
-  undo: { viewBox: '0 0 20 20', d: 'M8 5L3 9l5 4M3 9h9a5 5 0 010 10' },
-  redo: { viewBox: '0 0 20 20', d: 'M12 5l5 4-5 4M17 9H8a5 5 0 000 10' },
-  trash: { viewBox: '0 0 20 20', d: 'M4 6h12M8 6V4h4v2M6 6l1 10h6l1-10' },
-  close: { viewBox: '0 0 20 20', d: 'M5 5l10 10M15 5L5 15', strokeWidth: 2 },
-  check: { viewBox: '0 0 16 16', d: 'M3.5 8.5l3 3 6-7', strokeWidth: 2 },
-  'arrow-left': { viewBox: '0 0 20 20', d: 'M11 5l-5 5 5 5M6 10h9' },
-} satisfies Record<string, IconDef>
+  check: 'M20 6 9 17l-5-5',
+  close: 'M18 6 6 18M6 6l12 12',
+  'arrow-left': 'M19 12H5M12 19l-7-7 7-7',
+  undo: 'M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5',
+  redo: 'M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5',
+  trash:
+    'M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2',
+} satisfies Record<string, string>
 
 export type IconName = keyof typeof ICONS

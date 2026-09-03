@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ICONS, type IconDef, type IconName } from './icons'
+import { ICONS, type IconName } from './icons'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     name: IconName
     /** Rendered width/height in px (or any CSS length). */
@@ -10,22 +9,20 @@ const props = withDefaults(
   }>(),
   { size: 18 },
 )
-
-const icon = computed<IconDef>(() => ICONS[props.name])
 </script>
 
 <template>
   <svg
     :width="size"
     :height="size"
-    :viewBox="icon.viewBox"
+    viewBox="0 0 24 24"
     fill="none"
     aria-hidden="true"
   >
     <path
-      :d="icon.d"
+      :d="ICONS[name]"
       stroke="currentColor"
-      :stroke-width="icon.strokeWidth ?? 1.6"
+      stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
     />

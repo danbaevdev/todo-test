@@ -32,10 +32,12 @@
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-lg);
   color: var(--color-text);
+  transition: var(--transition-base);
 }
 
 .shell__brand:hover {
   text-decoration: none;
+  opacity: 0.75;
 }
 
 .shell__main {
