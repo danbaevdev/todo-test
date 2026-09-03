@@ -17,7 +17,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Notes & Todo',
+      title: 'Заметки',
       meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
     },
   },

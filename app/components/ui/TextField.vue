@@ -73,11 +73,18 @@ onBeforeUnmount(() => emitPause.cancel())
   background: var(--color-surface);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .field::placeholder {
   color: var(--color-text-muted);
+}
+
+/* Light hover — skipped while focused so the focus state stays clean. */
+.field:hover:not(:focus-visible):not(.field--invalid) {
+  border-color: color-mix(in srgb, var(--color-text) 25%, var(--color-border-strong));
+  background: color-mix(in srgb, var(--color-text) 3%, var(--color-surface));
 }
 
 /* Outline comes from the global :focus-visible rule; just tint the border. */
