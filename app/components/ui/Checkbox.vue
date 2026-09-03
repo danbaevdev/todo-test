@@ -3,38 +3,27 @@ const props = withDefaults(
   defineProps<{
     modelValue: boolean
     label?: string
-    readonly?: boolean
     disabled?: boolean
   }>(),
-  { readonly: false, disabled: false },
+  { disabled: false },
 )
 
 const emit = defineEmits<{ 'update:modelValue': [boolean] }>()
 
 function onChange(event: Event) {
-  if (props.readonly) return
+  if (props.disabled) return
   emit('update:modelValue', (event.target as HTMLInputElement).checked)
-}
-
-function onClick(event: MouseEvent) {
-  if (props.readonly) event.preventDefault()
 }
 </script>
 
 <template>
-  <label
-    class="checkbox"
-    :class="{ 'checkbox--readonly': readonly, 'checkbox--disabled': disabled }"
-  >
+  <label class="checkbox" :class="{ 'checkbox--disabled': disabled }">
     <input
       type="checkbox"
       class="checkbox__input"
       :checked="modelValue"
       :disabled="disabled"
-      :aria-readonly="readonly || undefined"
-      :tabindex="readonly ? -1 : undefined"
       @change="onChange"
-      @click="onClick"
     >
     <span class="checkbox__box" aria-hidden="true">
       <Icon name="check" />
@@ -49,10 +38,6 @@ function onClick(event: MouseEvent) {
   align-items: center;
   gap: var(--space-2);
   cursor: pointer;
-}
-
-.checkbox--readonly {
-  cursor: default;
 }
 
 .checkbox--disabled {

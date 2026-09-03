@@ -6,7 +6,7 @@ defineProps<{ todo: Todo }>()
 
 <template>
   <li class="preview-item">
-    <Checkbox :model-value="todo.done" readonly />
+    <Checkbox :model-value="todo.done" disabled />
     <span
       class="preview-item__text line-clamp-1"
       :class="{

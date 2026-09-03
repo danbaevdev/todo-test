@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ariaKeyshortcuts, formatShortcut } from '~/utils/platform'
+import { ariaKeyshortcuts } from '~/utils/platform'
 
 defineProps<{
   canUndo: boolean
@@ -17,8 +17,6 @@ const emit = defineEmits<{
 
 const undoShortcut = { key: 'Z' } as const
 const redoShortcut = { key: 'Z', shift: true } as const
-const undoHint = formatShortcut(undoShortcut)
-const redoHint = formatShortcut(redoShortcut)
 </script>
 
 <template>
@@ -37,7 +35,7 @@ const redoHint = formatShortcut(redoShortcut)
           <Icon name="undo" />
         </Button>
         <template #content>
-          <span class="toolbar__hint">Отменить <kbd>{{ undoHint }}</kbd></span>
+          <span class="toolbar__hint">Отменить <KbdShortcut :shortcut="undoShortcut" /></span>
         </template>
       </Tooltip>
 
@@ -54,7 +52,7 @@ const redoHint = formatShortcut(redoShortcut)
           <Icon name="redo" />
         </Button>
         <template #content>
-          <span class="toolbar__hint">Повторить <kbd>{{ redoHint }}</kbd></span>
+          <span class="toolbar__hint">Повторить <KbdShortcut :shortcut="redoShortcut" /></span>
         </template>
       </Tooltip>
     </div>
@@ -93,13 +91,5 @@ const redoHint = formatShortcut(redoShortcut)
   align-items: center;
   gap: var(--space-2);
   white-space: nowrap;
-}
-
-.toolbar__hint kbd {
-  font-family: var(--font-family-base);
-  font-size: 0.9em;
-  padding: 0 var(--space-1);
-  border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--color-bg) 20%, transparent);
 }
 </style>
