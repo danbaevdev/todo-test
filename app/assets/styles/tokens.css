@@ -61,6 +61,7 @@
   --dialog-width: 420px;
 
   /* Control dimensions */
+  --control-height-xs: 24px;
   --control-height-sm: 28px;
   --control-height: 32px;
   --control-height-lg: 40px;

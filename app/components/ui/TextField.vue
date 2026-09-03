@@ -83,7 +83,7 @@ onBeforeUnmount(() => emitPause.cancel())
       v-if="showClear"
       icon
       variant="plain"
-      size="sm"
+      size="xs"
       no-title
       label="Очистить"
       class="field__clear"
@@ -115,7 +115,7 @@ onBeforeUnmount(() => emitPause.cancel())
 }
 
 .field--has-clear {
-  padding-right: calc(var(--icon-size-sm) + var(--space-2) * 2);
+  padding-right: calc(var(--icon-size-xs) + var(--space-2) * 2);
 }
 
 .field::placeholder {

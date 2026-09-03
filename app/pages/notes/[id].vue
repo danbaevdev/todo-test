@@ -202,6 +202,16 @@ function goBack() {
 .editor {
   display: grid;
   gap: var(--space-6);
+  /* Room for the fixed bottom toolbar on mobile (2 rows + padding + safe area). */
+  padding-bottom: calc(
+    var(--control-height-lg) * 2 + var(--space-3) * 3 + env(safe-area-inset-bottom, 0px)
+  );
+}
+
+@media (--bp-md) {
+  .editor {
+    padding-bottom: 0;
+  }
 }
 
 /* Ghost button pulled left by its own inline padding so the label sits on the grid edge. */

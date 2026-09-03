@@ -8,7 +8,7 @@ const props = withDefaults(
     /** Semantic color. */
     color?: 'neutral' | 'primary' | 'danger'
     /** Control size. */
-    size?: 'sm' | 'md' | 'lg'
+    size?: 'xs' | 'sm' | 'md' | 'lg'
     /** Icon-only button: square-ish, needs `label` for its accessible name. */
     icon?: boolean
     /** Accessible name — required when `icon`. */
@@ -77,6 +77,13 @@ const isLink = computed(() => !!props.to && !props.disabled)
 }
 
 /* --- Size --------------------------------------------------------------- */
+.btn--xs {
+  --icon-h: var(--control-height-xs);
+  --icon-glyph: var(--icon-size-xs);
+  min-height: var(--control-height-xs);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-xs);
+}
 .btn--sm {
   --icon-h: var(--control-height-sm);
   --icon-glyph: var(--icon-size-sm);
