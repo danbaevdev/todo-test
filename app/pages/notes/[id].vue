@@ -34,6 +34,9 @@ const isDirty = computed(() => {
   return serialize(note.value) !== serialize(current)
 })
 
+/** Nothing to save while the note is empty or unchanged. */
+const canSave = computed(() => isDirty.value && !isNoteEmpty(note.value))
+
 // --- Draft recovery --------------------------------------------------------
 const draft = useNoteDraft(id, note, isDirty)
 const showDraftPrompt = ref(draft.existingDraft !== null)
@@ -132,7 +135,7 @@ function goBack() {
     <NoteEditorToolbar
       :can-undo="canUndo"
       :can-redo="canRedo"
-      :dirty="isDirty"
+      :can-save="canSave"
       @save="save"
       @cancel="requestCancel"
       @remove="pending = 'remove'"

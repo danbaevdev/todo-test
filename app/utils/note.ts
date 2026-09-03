@@ -37,13 +37,16 @@ export function isNoteEmpty(note: Pick<Note, 'title' | 'todos'>): boolean {
 }
 
 /**
- * Normalize a note before it is persisted: trim the title and every todo's text.
- * Empty todos are kept — they just render muted ("Без текста").
+ * Normalize a note for persistence: trim the title and every todo, then drop
+ * todos that are still empty. Empty rows are fine while editing (you're about
+ * to fill them) but there's no reason to save them.
  */
 export function sanitizeNoteContent(input: NoteContent): NoteContent {
   return {
     title: input.title.trim(),
-    todos: input.todos.map((t) => ({ ...t, text: t.text.trim() })),
+    todos: input.todos
+      .map((t) => ({ ...t, text: t.text.trim() }))
+      .filter((t) => t.text !== ''),
   }
 }
 

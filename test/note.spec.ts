@@ -10,20 +10,31 @@ describe('sanitizeNoteContent', () => {
     expect(sanitizeNoteContent({ title: '  Покупки  ', todos: [] }).title).toBe('Покупки')
   })
 
-  it('trims todo text but keeps empty todos', () => {
+  it('trims todo text and drops the empty ones', () => {
     const result = sanitizeNoteContent({
       title: '',
       todos: [
         { id: 'a', text: '  Молоко ', done: false },
         { id: 'b', text: '   ', done: false },
         { id: 'c', text: '', done: true },
+        { id: 'd', text: 'Хлеб', done: false },
       ],
     })
     expect(result.todos).toEqual([
       { id: 'a', text: 'Молоко', done: false },
-      { id: 'b', text: '', done: false },
-      { id: 'c', text: '', done: true },
+      { id: 'd', text: 'Хлеб', done: false },
     ])
+  })
+
+  it('keeps a real title while dropping every empty todo', () => {
+    const result = sanitizeNoteContent({
+      title: 'Покупки',
+      todos: [
+        { id: 'a', text: '', done: false },
+        { id: 'b', text: '  ', done: false },
+      ],
+    })
+    expect(result).toEqual({ title: 'Покупки', todos: [] })
   })
 
   it('keeps done state and ids of surviving todos', () => {

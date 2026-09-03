@@ -4,7 +4,7 @@ import { ariaKeyshortcuts } from '~/utils/platform'
 defineProps<{
   canUndo: boolean
   canRedo: boolean
-  dirty: boolean
+  canSave: boolean
 }>()
 
 const emit = defineEmits<{
@@ -60,7 +60,7 @@ const redoShortcut = { key: 'Z', shift: true } as const
     <div class="toolbar__main">
       <Button variant="outline" color="danger" @click="emit('remove')">Удалить</Button>
       <Button variant="outline" @click="emit('cancel')">Отменить редактирование</Button>
-      <Button color="primary" :disabled="!dirty" @click="emit('save')">Сохранить</Button>
+      <Button color="primary" :disabled="!canSave" @click="emit('save')">Сохранить</Button>
     </div>
   </div>
 </template>
