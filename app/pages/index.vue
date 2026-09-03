@@ -25,7 +25,7 @@ function confirmDelete() {
   <div class="notes">
     <div class="notes__bar">
       <h1>Мои заметки</h1>
-      <Button variant="primary" @click="createNote">Новая заметка</Button>
+      <Button color="primary" @click="createNote">Новая заметка</Button>
     </div>
 
     <template v-if="loaded">

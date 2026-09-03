@@ -21,7 +21,7 @@ const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
 
     <div class="note-card__actions">
       <Button :to="`/notes/${note.id}`" variant="outline">Редактировать</Button>
-      <Button variant="danger" @click="emit('delete')">Удалить</Button>
+      <Button color="danger" @click="emit('delete')">Удалить</Button>
     </div>
   </article>
 </template>

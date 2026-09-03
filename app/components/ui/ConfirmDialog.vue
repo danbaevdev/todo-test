@@ -18,7 +18,7 @@ const emit = defineEmits<{ confirm: []; cancel: [] }>()
     <p>{{ message }}</p>
     <template #footer>
       <Button variant="ghost" @click="emit('cancel')">{{ cancelLabel }}</Button>
-      <Button :variant="danger ? 'danger' : 'primary'" @click="emit('confirm')">
+      <Button :color="danger ? 'danger' : 'primary'" @click="emit('confirm')">
         {{ confirmLabel }}
       </Button>
     </template>

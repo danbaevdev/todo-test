@@ -63,7 +63,7 @@ onBeforeUnmount(() => emitPause.cancel())
 </template>
 
 <style scoped>
-/* Single-line inputs match Button / IconButton height. */
+/* Single-line inputs match Button height. */
 .field {
   width: 100%;
   min-height: var(--control-height);
