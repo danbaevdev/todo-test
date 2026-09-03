@@ -10,6 +10,7 @@ export function memoryStorage(
     getItem: k => (dump.has(k) ? dump.get(k)! : null),
     setItem: (k, v) => void dump.set(k, v),
     removeItem: k => void dump.delete(k),
+    keys: () => [...dump.keys()],
   }
 }
 

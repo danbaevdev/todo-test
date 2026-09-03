@@ -42,6 +42,39 @@ describe('notes store', () => {
     expect(store.hasNote(note.id)).toBe(false)
   })
 
+  it('deleting a note also clears its draft', () => {
+    const {store, backend} = setup()
+    const storage = createNotesStorage(backend)
+    const note = store.createNote({title: 'First'})
+    storage.writeDraft({
+      schemaVersion: 1,
+      noteId: note.id,
+      note: {...note},
+      savedAt: 1,
+    })
+
+    store.deleteNote(note.id)
+    expect(storage.readDraft(note.id)).toBeNull()
+  })
+
+  it('prunes orphan drafts on init', () => {
+    const backend = memoryStorage()
+    const storage = createNotesStorage(backend)
+    storage.writeNotes([{id: 'a', title: 'A', todos: [], createdAt: 1, updatedAt: 1}])
+    storage.writeDraft({
+      schemaVersion: 1,
+      noteId: 'gone',
+      note: {id: 'gone', title: '', todos: [], createdAt: 1, updatedAt: 1},
+      savedAt: 1,
+    })
+
+    const store = useNotesStore()
+    store._useStorage(createNotesStorage(backend))
+    store.init()
+
+    expect(storage.readDraft('gone')).toBeNull()
+  })
+
   it('updateNote is a no-op when the note is gone (deleted in another tab)', () => {
     const {store} = setup()
     const ok = store.updateNote('ghost', {title: 'x', todos: []})

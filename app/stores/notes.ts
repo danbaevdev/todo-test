@@ -53,6 +53,8 @@ export const useNotesStore = defineStore('notes', () => {
   function init() {
     if (loaded.value) return
     reloadFromStorage()
+    // Clear drafts left behind by deleted notes / old sessions.
+    storage.pruneDrafts(notes.value.map(n => n.id))
     loaded.value = true
 
     if (typeof window !== 'undefined' && !listenersBound) {
@@ -92,6 +94,7 @@ export const useNotesStore = defineStore('notes', () => {
     const index = notes.value.findIndex(n => n.id === id)
     if (index === -1) return
     notes.value.splice(index, 1)
+    storage.clearDraft(id)
     schedulePersist()
   }
 

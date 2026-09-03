@@ -58,6 +58,27 @@ describe('createNotesStorage', () => {
     expect(storage.readDraft('n1')).toBeNull()
   })
 
+  it('prunes drafts whose note is gone, keeps the rest', () => {
+    const backend = memoryStorage()
+    const storage = createNotesStorage(backend)
+    const draft = (id: string) => ({
+      schemaVersion: SCHEMA_VERSION,
+      noteId: id,
+      note: makeNote({id}),
+      savedAt: 1,
+    })
+
+    storage.writeDraft(draft('alive'))
+    storage.writeDraft(draft('orphan-1'))
+    storage.writeDraft(draft('orphan-2'))
+
+    storage.pruneDrafts(['alive'])
+
+    expect(storage.readDraft('alive')).not.toBeNull()
+    expect(storage.readDraft('orphan-1')).toBeNull()
+    expect(storage.readDraft('orphan-2')).toBeNull()
+  })
+
   it('ignores a draft with a mismatched schema version', () => {
     const backend = memoryStorage({
       [DRAFT_KEY_PREFIX + 'n1']: JSON.stringify({

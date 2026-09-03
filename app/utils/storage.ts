@@ -4,6 +4,8 @@ export interface StorageLike {
   getItem(key: string): string | null
   setItem(key: string, value: string): void
   removeItem(key: string): void
+  /** Enumerate every stored key. Optional — pruning is skipped without it. */
+  keys?(): string[]
 }
 
 export const NOTES_KEY = 'notes-todo:state'
@@ -17,7 +19,15 @@ const noopStorage: StorageLike = {
 
 function resolveBackend(explicit?: StorageLike): StorageLike {
   if (explicit) return explicit
-  if (typeof window !== 'undefined' && window.localStorage) return window.localStorage
+  if (typeof window !== 'undefined' && window.localStorage) {
+    const ls = window.localStorage
+    return {
+      getItem: k => ls.getItem(k),
+      setItem: (k, v) => ls.setItem(k, v),
+      removeItem: k => ls.removeItem(k),
+      keys: () => Object.keys(ls),
+    }
+  }
   return noopStorage
 }
 
@@ -64,6 +74,8 @@ export interface NotesStorage {
   readDraft(noteId: string): PersistedDraft | null
   writeDraft(draft: PersistedDraft): void
   clearDraft(noteId: string): void
+  /** Drop every draft whose note id is not in `keepNoteIds` (orphans). */
+  pruneDrafts(keepNoteIds: Iterable<string>): void
 }
 
 export function createNotesStorage(backend?: StorageLike): NotesStorage {
@@ -112,6 +124,15 @@ export function createNotesStorage(backend?: StorageLike): NotesStorage {
 
     clearDraft(noteId) {
       store.removeItem(DRAFT_KEY_PREFIX + noteId)
+    },
+
+    pruneDrafts(keepNoteIds) {
+      if (!store.keys) return
+      const keep = new Set(keepNoteIds)
+      for (const key of store.keys()) {
+        if (!key.startsWith(DRAFT_KEY_PREFIX)) continue
+        if (!keep.has(key.slice(DRAFT_KEY_PREFIX.length))) store.removeItem(key)
+      }
     },
   }
 }
