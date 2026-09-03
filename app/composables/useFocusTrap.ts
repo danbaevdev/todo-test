@@ -1,4 +1,4 @@
-import { onBeforeUnmount, onMounted, type Ref } from 'vue'
+import {onBeforeUnmount, onMounted, type Ref} from 'vue'
 
 const FOCUSABLE = [
   'a[href]',
@@ -19,7 +19,7 @@ export function useFocusTrap(container: Ref<HTMLElement | null>) {
   function focusable(): HTMLElement[] {
     if (!container.value) return []
     return Array.from(container.value.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
-      (el) => el.offsetParent !== null || el === document.activeElement,
+      el => el.offsetParent !== null || el === document.activeElement,
     )
   }
 
@@ -33,11 +33,13 @@ export function useFocusTrap(container: Ref<HTMLElement | null>) {
     const first = items[0]!
     const last = items[items.length - 1]!
     const active = document.activeElement as HTMLElement | null
+    // `outside` also covers the dialog container itself (tabindex="-1").
+    const outside = !active || !items.includes(active)
 
-    if (event.shiftKey && (active === first || !container.value.contains(active))) {
+    if (event.shiftKey && (outside || active === first)) {
       event.preventDefault()
       last.focus()
-    } else if (!event.shiftKey && active === last) {
+    } else if (!event.shiftKey && (outside || active === last)) {
       event.preventDefault()
       first.focus()
     }
@@ -45,8 +47,9 @@ export function useFocusTrap(container: Ref<HTMLElement | null>) {
 
   onMounted(() => {
     previouslyFocused = document.activeElement as HTMLElement | null
-    const items = focusable()
-    ;(items[0] ?? container.value)?.focus()
+    // Focus the dialog itself (tabindex="-1"), not its first button — so nothing
+    // shows a focus ring on open; Tab then moves into the content.
+    container.value?.focus()
     document.addEventListener('keydown', onKeydown, true)
   })
 
