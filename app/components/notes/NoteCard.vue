@@ -22,22 +22,14 @@ const title = computed(() => noteTitle(props.note))
     <TodoPreviewList :todos="note.todos" :max="3" />
 
     <div class="note-card__actions">
-      <Button
-        :to="`/notes/${note.id}`"
-        :aria-label="`Редактировать заметку «${title}»`"
-        variant="outline"
-        class="note-card__link"
-      >
-        Редактировать
-      </Button>
-      <Button color="danger" class="note-card__delete" @click="emit('delete')">Удалить</Button>
+      <Button :to="`/notes/${note.id}`" variant="outline">Редактировать</Button>
+      <Button color="danger" @click="emit('delete')">Удалить</Button>
     </div>
   </article>
 </template>
 
 <style scoped>
 .note-card {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
@@ -46,18 +38,6 @@ const title = computed(() => noteTitle(props.note))
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.note-card:hover {
-  border-color: var(--color-border-strong);
-  box-shadow: var(--shadow-md);
-}
-
-/* Keyboard focus on the edit link shows the ring on the whole card. */
-.note-card:has(.note-card__link:focus-visible) {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 2px;
 }
 
 .note-card__head {
@@ -85,27 +65,5 @@ const title = computed(() => noteTitle(props.note))
   /* Pin to the bottom so action rows line up across cards of unequal height. */
   margin-top: auto;
   padding-top: var(--space-1);
-}
-
-/* The edit link stretches over the whole card — click anywhere to open it. */
-.note-card__link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-lg);
-}
-.note-card__link:focus-visible {
-  outline: none; /* the card wears the ring instead */
-}
-
-/* Hovering the card previews the link's hover state too. */
-.note-card:hover .note-card__link {
-  background: color-mix(in srgb, var(--color-text) 10%, transparent);
-}
-
-/* Delete stays clickable above the stretched link. */
-.note-card__delete {
-  position: relative;
-  z-index: 1;
 }
 </style>
