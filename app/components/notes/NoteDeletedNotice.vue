@@ -7,16 +7,16 @@
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .notice {
-  padding: space(3) space(4);
+  padding: var(--space-3) var(--space-4);
   border: 1px solid var(--color-warning);
   border-radius: var(--radius-md);
   background: color-mix(in srgb, var(--color-warning) 12%, var(--color-surface));
+}
 
-  &__text {
-    font-size: var(--font-size-sm);
-    color: var(--color-text);
-  }
+.notice__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
 }
 </style>

@@ -172,14 +172,14 @@ function addTodo() {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .editor {
   display: grid;
-  gap: space(5);
+  gap: var(--space-5);
+}
 
-  &__todos {
-    display: grid;
-    gap: space(3);
-  }
+.editor__todos {
+  display: grid;
+  gap: var(--space-3);
 }
 </style>

@@ -42,54 +42,57 @@ function onClick(event: MouseEvent) {
   </label>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .checkbox {
   display: inline-flex;
   align-items: center;
-  gap: space(2);
+  gap: var(--space-2);
   cursor: pointer;
+}
 
-  &--readonly {
-    cursor: default;
-  }
+.checkbox--readonly {
+  cursor: default;
+}
 
-  &__input {
-    position: absolute;
-    opacity: 0;
-    width: 1px;
-    height: 1px;
-  }
+.checkbox__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
 
-  &__box {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    border: 1.5px solid var(--color-border-strong);
-    border-radius: var(--radius-sm);
-    background: var(--color-surface);
-    color: transparent;
-    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+.checkbox__box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: transparent;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
 
-    svg { width: 14px; height: 14px; }
-  }
+.checkbox__box svg {
+  width: 14px;
+  height: 14px;
+}
 
-  &__input:checked + &__box {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-    color: var(--color-text-inverse);
-  }
+.checkbox__input:checked + .checkbox__box {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
 
-  // The real input is visually hidden, so mirror the focus outline onto the box.
-  &__input:focus-visible + &__box {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
-  }
+/* The real input is visually hidden, so mirror the focus outline onto the box. */
+.checkbox__input:focus-visible + .checkbox__box {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
 
-  &__label {
-    font-size: var(--font-size-sm);
-  }
+.checkbox__label {
+  font-size: var(--font-size-sm);
 }
 </style>

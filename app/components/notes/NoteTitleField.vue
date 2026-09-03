@@ -22,15 +22,15 @@ const emit = defineEmits<{
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .title-field {
   display: grid;
-  gap: space(2);
+  gap: var(--space-2);
+}
 
-  &__label {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-muted);
-  }
+.title-field__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
 }
 </style>

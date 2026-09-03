@@ -37,24 +37,24 @@ const emit = defineEmits<{
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: space(3);
-  padding: space(3) 0;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+}
 
-  &__history,
-  &__main {
-    display: flex;
-    align-items: center;
-    gap: space(2);
-  }
+.toolbar__history,
+.toolbar__main {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
 
-  &__main {
-    flex-wrap: wrap;
-  }
+.toolbar__main {
+  flex-wrap: wrap;
 }
 </style>

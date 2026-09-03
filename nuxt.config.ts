@@ -8,21 +8,11 @@ export default defineNuxtConfig({
 
   components: [{ path: '~/components', pathPrefix: false }],
 
-  css: ['~/assets/styles/main.scss'],
+  css: ['~/assets/styles/tokens.css', '~/assets/styles/base.css'],
 
   typescript: {
     strict: true,
     typeCheck: false,
-  },
-
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@use "~/assets/styles/_tokens.scss" as *;\n',
-        },
-      },
-    },
   },
 
   app: {

@@ -26,44 +26,44 @@ const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
   </article>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .note-card {
   display: grid;
-  gap: space(3);
-  padding: space(4);
+  gap: var(--space-3);
+  padding: var(--space-4);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
+}
 
-  &__head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: space(3);
-  }
+.note-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
 
-  &__title {
-    font-size: var(--font-size-lg);
-  }
+.note-card__title {
+  font-size: var(--font-size-lg);
+}
 
-  &__count {
-    flex-shrink: 0;
-    font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
-  }
+.note-card__count {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
 
-  &__actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: space(2);
-    margin-top: space(1);
-  }
+.note-card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
 
-  &__edit {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-  }
+.note-card__edit {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
 </style>

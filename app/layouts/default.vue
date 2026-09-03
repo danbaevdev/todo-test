@@ -1,50 +1,45 @@
 <template>
   <div class="shell">
     <header class="shell__header">
-      <div class="shell__inner">
-        <NuxtLink to="/" class="shell__brand">Заметки&nbsp;&amp;&nbsp;Todo</NuxtLink>
+      <div class="container">
+        <NuxtLink to="/" class="shell__brand">Заметки</NuxtLink>
       </div>
     </header>
-    <main class="shell__inner shell__main">
+    <main class="container shell__main">
       <slot />
     </main>
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .shell {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
 
-  &__header {
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-surface);
-    position: sticky;
-    top: 0;
-    z-index: z('sticky');
-  }
+.shell__header {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
 
-  &__inner {
-    width: 100%;
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding-inline: space(4);
-  }
+.shell__brand {
+  display: inline-block;
+  padding-block: var(--space-4);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+}
 
-  &__brand {
-    display: inline-block;
-    padding-block: space(4);
-    font-weight: var(--font-weight-bold);
-    font-size: var(--font-size-lg);
-    color: var(--color-text);
+.shell__brand:hover {
+  text-decoration: none;
+}
 
-    &:hover { text-decoration: none; }
-  }
-
-  &__main {
-    flex: 1;
-    padding-block: space(6) space(12);
-  }
+.shell__main {
+  flex: 1;
+  padding-block: var(--space-6) var(--space-12);
 }
 </style>

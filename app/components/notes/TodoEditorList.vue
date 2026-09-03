@@ -34,21 +34,21 @@ const emit = defineEmits<{
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .todo-list {
   display: grid;
-  gap: space(3);
+  gap: var(--space-3);
+}
 
-  &__items {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: space(2);
-  }
+.todo-list__items {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
 
-  &__empty {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-  }
+.todo-list__empty {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
 }
 </style>

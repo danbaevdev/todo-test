@@ -19,22 +19,27 @@ defineProps<{ error: NuxtError }>()
   </NuxtLayout>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .error {
   display: grid;
   justify-items: center;
-  gap: space(3);
-  padding: space(16) space(4);
+  gap: var(--space-3);
+  padding: var(--space-16) var(--space-4);
   text-align: center;
+}
 
-  &__code {
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-muted);
-  }
+.error__code {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+}
 
-  &__title { font-size: var(--font-size-xl); }
+.error__title {
+  font-size: var(--font-size-xl);
+}
 
-  &__hint { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+.error__hint {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
 }
 </style>

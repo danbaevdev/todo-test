@@ -62,33 +62,35 @@ onBeforeUnmount(() => emitPause.cancel())
   />
 </template>
 
-<style scoped lang="scss">
+<style scoped>
+/* Single-line inputs match Button / IconButton height. */
 .field {
   width: 100%;
-  // Single-line inputs match Button / IconButton height.
   min-height: var(--control-height);
-  padding: space(1) space(3);
+  padding: var(--space-1) var(--space-3);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
 
-  &::placeholder { color: var(--color-text-muted); }
+.field::placeholder {
+  color: var(--color-text-muted);
+}
 
-  // Outline comes from the global :focus-visible rule; just tint the border.
-  &:focus-visible {
-    border-color: var(--color-primary);
-  }
+/* Outline comes from the global :focus-visible rule; just tint the border. */
+.field:focus-visible {
+  border-color: var(--color-primary);
+}
 
-  &--invalid {
-    border-color: var(--color-danger);
-  }
+.field--invalid {
+  border-color: var(--color-danger);
 }
 
 textarea.field {
-  padding-block: space(2);
+  padding-block: var(--space-2);
   resize: vertical;
 }
 </style>

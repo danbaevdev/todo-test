@@ -23,12 +23,12 @@ withDefaults(
   </button>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
+/* Same height as Button; a touch wider than tall. */
 .icon-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  // Same height as Button; a touch wider than tall.
   height: var(--control-height);
   width: calc(var(--control-height) + var(--space-2));
   padding: 0;
@@ -37,25 +37,25 @@ withDefaults(
   background: var(--color-surface);
   color: var(--color-text-muted);
   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
 
-  &:not(:disabled):hover {
-    background: var(--color-surface-alt);
-    color: var(--color-text);
-  }
+.icon-button:not(:disabled):hover {
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+}
 
-  &:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
+.icon-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 
-  &--danger:not(:disabled):hover {
-    color: var(--color-danger);
-    border-color: var(--color-danger);
-  }
+.icon-button--danger:not(:disabled):hover {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
 
-  :slotted(svg) {
-    width: 18px;
-    height: 18px;
-  }
+.icon-button :slotted(svg) {
+  width: 18px;
+  height: 18px;
 }
 </style>

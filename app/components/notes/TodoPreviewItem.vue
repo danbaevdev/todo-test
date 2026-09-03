@@ -13,21 +13,21 @@ defineProps<{ todo: Todo }>()
   </li>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .preview-item {
   display: flex;
   align-items: center;
-  gap: space(2);
+  gap: var(--space-2);
   min-width: 0;
+}
 
-  &__text {
-    font-size: var(--font-size-sm);
-    color: var(--color-text);
+.preview-item__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
 
-    &--done {
-      text-decoration: line-through;
-      color: var(--color-text-muted);
-    }
-  }
+.preview-item__text--done {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
 }
 </style>

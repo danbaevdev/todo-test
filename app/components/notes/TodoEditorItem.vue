@@ -41,10 +41,10 @@ const emit = defineEmits<{
   </li>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .todo-item {
   display: flex;
   align-items: center;
-  gap: space(3);
+  gap: var(--space-3);
 }
 </style>

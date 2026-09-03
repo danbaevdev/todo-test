@@ -21,22 +21,22 @@ const hiddenCount = computed(() => Math.max(0, props.todos.length - props.max))
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .preview {
   display: grid;
-  gap: space(2);
+  gap: var(--space-2);
+}
 
-  &__list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: space(1);
-  }
+.preview__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-1);
+}
 
-  &__empty,
-  &__more {
-    font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
-  }
+.preview__empty,
+.preview__more {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
 }
 </style>

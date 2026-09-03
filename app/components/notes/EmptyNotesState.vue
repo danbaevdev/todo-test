@@ -5,23 +5,23 @@
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .empty {
   display: grid;
-  gap: space(1);
-  padding: space(12) space(4);
+  gap: var(--space-1);
+  padding: var(--space-12) var(--space-4);
   text-align: center;
   border: 1px dashed var(--color-border-strong);
   border-radius: var(--radius-lg);
+}
 
-  &__title {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-  }
+.empty__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
 
-  &__hint {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-  }
+.empty__hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
 }
 </style>

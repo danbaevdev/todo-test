@@ -52,23 +52,23 @@ function confirmDelete() {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .notes {
   display: grid;
-  gap: space(6);
+  gap: var(--space-6);
+}
 
-  &__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: space(3);
-  }
+.notes__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
 
-  &__grid {
-    display: grid;
-    gap: space(4);
-    // auto-fill + minmax already collapses to one column on narrow screens
-    grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
-  }
+/* auto-fill + minmax already collapses to one column on narrow screens */
+.notes__grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
 }
 </style>

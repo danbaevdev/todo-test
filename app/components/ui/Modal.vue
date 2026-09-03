@@ -70,15 +70,15 @@ onBeforeUnmount(() => {
   </Teleport>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .modal {
   position: fixed;
   inset: 0;
-  z-index: z('modal');
+  z-index: var(--z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: space(4);
+  padding: var(--space-4);
   background: var(--color-overlay);
 }
 
@@ -90,15 +90,15 @@ onBeforeUnmount(() => {
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - #{space(8)});
+  max-height: calc(100vh - var(--space-8));
 }
 
 .modal__header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: space(3);
-  padding: space(4) space(4) space(3);
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-3);
 }
 
 .modal__title {
@@ -107,16 +107,22 @@ onBeforeUnmount(() => {
 
 .modal__close {
   display: inline-flex;
-  padding: space(1);
+  padding: var(--space-1);
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
+}
 
-  svg { width: 18px; height: 18px; }
-  &:hover { color: var(--color-text); }
+.modal__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.modal__close:hover {
+  color: var(--color-text);
 }
 
 .modal__body {
-  padding: 0 space(4) space(4);
+  padding: 0 var(--space-4) var(--space-4);
   overflow-y: auto;
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
@@ -125,7 +131,7 @@ onBeforeUnmount(() => {
 .modal__footer {
   display: flex;
   justify-content: flex-end;
-  gap: space(2);
-  padding: space(3) space(4) space(4);
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) var(--space-4);
 }
 </style>
