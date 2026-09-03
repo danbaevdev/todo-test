@@ -25,6 +25,7 @@ const emit = defineEmits<{
   <li ref="root" class="todo-item">
     <Checkbox :model-value="todo.done" @update:model-value="emit('toggle')" />
     <TextField
+      clearable
       :model-value="todo.text"
       placeholder="Текст пункта"
       aria-label="Текст пункта"
