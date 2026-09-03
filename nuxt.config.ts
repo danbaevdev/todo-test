@@ -1,12 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: false },
+  devtools: {enabled: false},
   ssr: false, // SPA per ТЗ
 
-  modules: ['@pinia/nuxt'],
+  modules: ['@pinia/nuxt', '@nuxt/eslint'],
 
-  components: [{ path: '~/components', pathPrefix: false }],
+  components: [{path: '~/components', pathPrefix: false}],
 
   css: ['~/assets/styles/tokens.css', '~/assets/styles/base.css'],
 
@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Заметки',
-      meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
+      meta: [{name: 'viewport', content: 'width=device-width, initial-scale=1'}],
     },
   },
 })

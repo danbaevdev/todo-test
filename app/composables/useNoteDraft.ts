@@ -1,7 +1,7 @@
-import { onBeforeUnmount, watch, type Ref } from 'vue'
-import { debounce } from '~/utils/debounce'
-import { createNotesStorage } from '~/utils/storage'
-import { SCHEMA_VERSION, type Note, type PersistedDraft } from '~/types/note'
+import {onBeforeUnmount, watch, type Ref} from 'vue'
+import {debounce} from '~/utils/debounce'
+import {createNotesStorage} from '~/utils/storage'
+import {SCHEMA_VERSION, type Note, type PersistedDraft} from '~/types/note'
 
 const DRAFT_DELAY = 600
 
@@ -34,7 +34,7 @@ export function useNoteDraft(noteId: string, note: Ref<Note>, isDirty: Ref<boole
         storage.clearDraft(noteId)
       }
     },
-    { deep: true },
+    {deep: true},
   )
 
   function flush() {
@@ -55,5 +55,5 @@ export function useNoteDraft(noteId: string, note: Ref<Note>, isDirty: Ref<boole
     if (typeof window !== 'undefined') window.removeEventListener('beforeunload', flush)
   })
 
-  return { existingDraft: existing, clear, flush }
+  return {existingDraft: existing, clear, flush}
 }

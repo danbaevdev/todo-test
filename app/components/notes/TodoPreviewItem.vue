@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Todo } from '~/types/note'
+import type {Todo} from '~/types/note'
 
-defineProps<{ todo: Todo }>()
+defineProps<{todo: Todo}>()
 </script>
 
 <template>

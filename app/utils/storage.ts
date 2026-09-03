@@ -1,9 +1,4 @@
-import {
-  SCHEMA_VERSION,
-  type Note,
-  type PersistedDraft,
-  type PersistedState,
-} from '~/types/note'
+import {SCHEMA_VERSION, type Note, type PersistedDraft, type PersistedState} from '~/types/note'
 
 export interface StorageLike {
   getItem(key: string): string | null
@@ -31,7 +26,7 @@ function resolveBackend(explicit?: StorageLike): StorageLike {
  * Unknown / newer / corrupt data falls back to an empty state.
  */
 export function migrateState(raw: unknown): PersistedState {
-  const empty: PersistedState = { schemaVersion: SCHEMA_VERSION, notes: [] }
+  const empty: PersistedState = {schemaVersion: SCHEMA_VERSION, notes: []}
   if (!raw || typeof raw !== 'object') return empty
 
   const candidate = raw as Partial<PersistedState>
@@ -42,7 +37,7 @@ export function migrateState(raw: unknown): PersistedState {
   if (version > SCHEMA_VERSION) return empty
 
   const notes = candidate.notes.filter(isValidNote)
-  return { schemaVersion: SCHEMA_VERSION, notes }
+  return {schemaVersion: SCHEMA_VERSION, notes}
 }
 
 function isValidNote(value: unknown): value is Note {
@@ -53,12 +48,12 @@ function isValidNote(value: unknown): value is Note {
     typeof n.title === 'string' &&
     Array.isArray(n.todos) &&
     n.todos.every(
-      (t) =>
+      t =>
         t &&
         typeof t === 'object' &&
-        typeof (t as { id?: unknown }).id === 'string' &&
-        typeof (t as { text?: unknown }).text === 'string' &&
-        typeof (t as { done?: unknown }).done === 'boolean',
+        typeof (t as {id?: unknown}).id === 'string' &&
+        typeof (t as {text?: unknown}).text === 'string' &&
+        typeof (t as {done?: unknown}).done === 'boolean',
     )
   )
 }
@@ -86,7 +81,7 @@ export function createNotesStorage(backend?: StorageLike): NotesStorage {
     },
 
     writeNotes(notes) {
-      const payload: PersistedState = { schemaVersion: SCHEMA_VERSION, notes }
+      const payload: PersistedState = {schemaVersion: SCHEMA_VERSION, notes}
       store.setItem(NOTES_KEY, JSON.stringify(payload))
     },
 

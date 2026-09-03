@@ -11,7 +11,7 @@
 }
 
 html {
-  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -24,14 +24,25 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   line-height: var(--line-height-tight);
   font-weight: var(--font-weight-semibold);
 }
 
-h1 { font-size: var(--font-size-2xl); }
-h2 { font-size: var(--font-size-xl); }
-h3 { font-size: var(--font-size-lg); }
+h1 {
+  font-size: var(--font-size-2xl);
+}
+
+h2 {
+  font-size: var(--font-size-xl);
+}
+
+h3 {
+  font-size: var(--font-size-lg);
+}
 
 a {
   color: var(--color-primary);
@@ -97,8 +108,14 @@ svg {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.line-clamp-1 { -webkit-line-clamp: 1; }
-.line-clamp-2 { -webkit-line-clamp: 2; }
+
+.line-clamp-1 {
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  -webkit-line-clamp: 2;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,

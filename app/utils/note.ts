@@ -1,4 +1,4 @@
-import type { Note, Todo } from '~/types/note'
+import type {Note, Todo} from '~/types/note'
 
 export interface NoteContent {
   title: string
@@ -16,13 +16,13 @@ export function noteTitle(note: Pick<Note, 'title' | 'todos'>): string {
   const trimmed = note.title.trim()
   if (trimmed) return trimmed
 
-  const firstFilled = note.todos.find((t) => t.text.trim() !== '')
+  const firstFilled = note.todos.find(t => t.text.trim() !== '')
   return firstFilled ? firstFilled.text.trim() : 'Без названия'
 }
 
 /** A note with neither a title nor any todo text — nothing worth persisting. */
 export function isNoteEmpty(note: Pick<Note, 'title' | 'todos'>): boolean {
-  return !note.title.trim() && !note.todos.some((t) => t.text.trim() !== '')
+  return !note.title.trim() && !note.todos.some(t => t.text.trim() !== '')
 }
 
 /**
@@ -33,9 +33,7 @@ export function isNoteEmpty(note: Pick<Note, 'title' | 'todos'>): boolean {
 export function sanitizeNoteContent(input: NoteContent): NoteContent {
   return {
     title: input.title.trim(),
-    todos: input.todos
-      .map((t) => ({ ...t, text: t.text.trim() }))
-      .filter((t) => t.text !== ''),
+    todos: input.todos.map(t => ({...t, text: t.text.trim()})).filter(t => t.text !== ''),
   }
 }
 
@@ -52,5 +50,5 @@ export interface TodoPreview {
 export function previewTodos(todos: Todo[], max: number): TodoPreview {
   const overflow = Math.max(0, todos.length - max)
   const count = overflow <= 1 ? todos.length : max
-  return { visible: todos.slice(0, count), hiddenCount: todos.length - count }
+  return {visible: todos.slice(0, count), hiddenCount: todos.length - count}
 }

@@ -1,6 +1,6 @@
-import { computed, ref } from 'vue'
-import { createId } from '~/utils/id'
-import type { Note, Todo } from '~/types/note'
+import {computed, ref} from 'vue'
+import {createId} from '~/utils/id'
+import type {Note, Todo} from '~/types/note'
 
 /**
  * Manual undo/redo for a single editing session.
@@ -17,11 +17,11 @@ import type { Note, Todo } from '~/types/note'
 export const HISTORY_LIMIT = 50
 
 type Op =
-  | { kind: 'set-title'; before: string; after: string }
-  | { kind: 'toggle-todo'; todoId: string; before: boolean; after: boolean }
-  | { kind: 'edit-todo-text'; todoId: string; before: string; after: string }
-  | { kind: 'add-todo'; index: number; todo: Todo }
-  | { kind: 'remove-todo'; index: number; todo: Todo }
+  | {kind: 'set-title'; before: string; after: string}
+  | {kind: 'toggle-todo'; todoId: string; before: boolean; after: boolean}
+  | {kind: 'edit-todo-text'; todoId: string; before: string; after: string}
+  | {kind: 'add-todo'; index: number; todo: Todo}
+  | {kind: 'remove-todo'; index: number; todo: Todo}
 
 function clone<T>(value: T): T {
   // JSON clone: strips Vue reactive proxies and is sufficient for plain note data.
@@ -40,7 +40,7 @@ export function useEditHistory(initial: Note) {
   const canRedo = computed(() => future.value.length > 0)
 
   function findTodo(todoId: string): Todo | undefined {
-    return note.value.todos.find((t) => t.id === todoId)
+    return note.value.todos.find(t => t.id === todoId)
   }
 
   function applyForward(op: Op) {
@@ -114,8 +114,8 @@ export function useEditHistory(initial: Note) {
     if (value === note.value.title) return
     pushCoalescing(
       'set-title',
-      { kind: 'set-title', before: note.value.title, after: value },
-      (existing) => {
+      {kind: 'set-title', before: note.value.title, after: value},
+      existing => {
         if (existing.kind === 'set-title') existing.after = value
       },
     )
@@ -127,8 +127,8 @@ export function useEditHistory(initial: Note) {
     if (!todo || todo.text === value) return
     pushCoalescing(
       `edit-todo-text:${todoId}`,
-      { kind: 'edit-todo-text', todoId, before: todo.text, after: value },
-      (existing) => {
+      {kind: 'edit-todo-text', todoId, before: todo.text, after: value},
+      existing => {
         if (existing.kind === 'edit-todo-text') existing.after = value
       },
     )
@@ -139,24 +139,24 @@ export function useEditHistory(initial: Note) {
     seal()
     const todo = findTodo(todoId)
     if (!todo) return
-    pushOp({ kind: 'toggle-todo', todoId, before: todo.done, after: !todo.done })
+    pushOp({kind: 'toggle-todo', todoId, before: todo.done, after: !todo.done})
     todo.done = !todo.done
   }
 
   function addTodo(text = ''): string {
     seal()
-    const todo: Todo = { id: createId(), text, done: false }
+    const todo: Todo = {id: createId(), text, done: false}
     const index = note.value.todos.length
-    pushOp({ kind: 'add-todo', index, todo: clone(todo) })
+    pushOp({kind: 'add-todo', index, todo: clone(todo)})
     note.value.todos.splice(index, 0, todo)
     return todo.id
   }
 
   function removeTodo(todoId: string) {
     seal()
-    const index = note.value.todos.findIndex((t) => t.id === todoId)
+    const index = note.value.todos.findIndex(t => t.id === todoId)
     if (index === -1) return
-    pushOp({ kind: 'remove-todo', index, todo: clone(note.value.todos[index]!) })
+    pushOp({kind: 'remove-todo', index, todo: clone(note.value.todos[index]!)})
     note.value.todos.splice(index, 1)
   }
 

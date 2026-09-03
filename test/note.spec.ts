@@ -1,28 +1,28 @@
-import { describe, expect, it } from 'vitest'
-import { isNoteEmpty, noteTitle, previewTodos, sanitizeNoteContent } from '~/utils/note'
-import type { Todo } from '~/types/note'
+import {describe, expect, it} from 'vitest'
+import {isNoteEmpty, noteTitle, previewTodos, sanitizeNoteContent} from '~/utils/note'
+import type {Todo} from '~/types/note'
 
 const todos = (n: number): Todo[] =>
-  Array.from({ length: n }, (_, i) => ({ id: `t${i}`, text: `item ${i}`, done: false }))
+  Array.from({length: n}, (_, i) => ({id: `t${i}`, text: `item ${i}`, done: false}))
 
 describe('sanitizeNoteContent', () => {
   it('trims the title', () => {
-    expect(sanitizeNoteContent({ title: '  Покупки  ', todos: [] }).title).toBe('Покупки')
+    expect(sanitizeNoteContent({title: '  Покупки  ', todos: []}).title).toBe('Покупки')
   })
 
   it('trims todo text and drops the empty ones', () => {
     const result = sanitizeNoteContent({
       title: '',
       todos: [
-        { id: 'a', text: '  Молоко ', done: false },
-        { id: 'b', text: '   ', done: false },
-        { id: 'c', text: '', done: true },
-        { id: 'd', text: 'Хлеб', done: false },
+        {id: 'a', text: '  Молоко ', done: false},
+        {id: 'b', text: '   ', done: false},
+        {id: 'c', text: '', done: true},
+        {id: 'd', text: 'Хлеб', done: false},
       ],
     })
     expect(result.todos).toEqual([
-      { id: 'a', text: 'Молоко', done: false },
-      { id: 'd', text: 'Хлеб', done: false },
+      {id: 'a', text: 'Молоко', done: false},
+      {id: 'd', text: 'Хлеб', done: false},
     ])
   })
 
@@ -30,23 +30,23 @@ describe('sanitizeNoteContent', () => {
     const result = sanitizeNoteContent({
       title: 'Покупки',
       todos: [
-        { id: 'a', text: '', done: false },
-        { id: 'b', text: '  ', done: false },
+        {id: 'a', text: '', done: false},
+        {id: 'b', text: '  ', done: false},
       ],
     })
-    expect(result).toEqual({ title: 'Покупки', todos: [] })
+    expect(result).toEqual({title: 'Покупки', todos: []})
   })
 
   it('keeps done state and ids of surviving todos', () => {
     const result = sanitizeNoteContent({
       title: 'x',
-      todos: [{ id: 't1', text: ' done ', done: true }],
+      todos: [{id: 't1', text: ' done ', done: true}],
     })
-    expect(result.todos[0]).toEqual({ id: 't1', text: 'done', done: true })
+    expect(result.todos[0]).toEqual({id: 't1', text: 'done', done: true})
   })
 
   it('does not mutate the input', () => {
-    const input = { title: ' a ', todos: [{ id: 't', text: ' b ', done: false }] }
+    const input = {title: ' a ', todos: [{id: 't', text: ' b ', done: false}]}
     sanitizeNoteContent(input)
     expect(input.title).toBe(' a ')
     expect(input.todos[0]!.text).toBe(' b ')
@@ -55,7 +55,7 @@ describe('sanitizeNoteContent', () => {
 
 describe('noteTitle', () => {
   it('uses the trimmed title when present', () => {
-    expect(noteTitle({ title: '  Покупки  ', todos: [] })).toBe('Покупки')
+    expect(noteTitle({title: '  Покупки  ', todos: []})).toBe('Покупки')
   })
 
   it('borrows the first non-empty todo when there is no title', () => {
@@ -63,33 +63,31 @@ describe('noteTitle', () => {
       noteTitle({
         title: '',
         todos: [
-          { id: 'a', text: '  ', done: false },
-          { id: 'b', text: ' Купить молоко ', done: false },
-          { id: 'c', text: 'Хлеб', done: false },
+          {id: 'a', text: '  ', done: false},
+          {id: 'b', text: ' Купить молоко ', done: false},
+          {id: 'c', text: 'Хлеб', done: false},
         ],
       }),
     ).toBe('Купить молоко')
   })
 
   it('falls back to a placeholder when there is nothing at all', () => {
-    expect(noteTitle({ title: '', todos: [{ id: 'a', text: '', done: false }] })).toBe(
-      'Без названия',
-    )
+    expect(noteTitle({title: '', todos: [{id: 'a', text: '', done: false}]})).toBe('Без названия')
   })
 })
 
 describe('isNoteEmpty', () => {
   it('is true with no title and no todo text', () => {
-    expect(isNoteEmpty({ title: '  ', todos: [] })).toBe(true)
-    expect(isNoteEmpty({ title: '', todos: [{ id: 'a', text: '   ', done: false }] })).toBe(true)
+    expect(isNoteEmpty({title: '  ', todos: []})).toBe(true)
+    expect(isNoteEmpty({title: '', todos: [{id: 'a', text: '   ', done: false}]})).toBe(true)
   })
 
   it('is false with a title', () => {
-    expect(isNoteEmpty({ title: 'X', todos: [] })).toBe(false)
+    expect(isNoteEmpty({title: 'X', todos: []})).toBe(false)
   })
 
   it('is false with any todo text', () => {
-    expect(isNoteEmpty({ title: '', todos: [{ id: 'a', text: 'y', done: false }] })).toBe(false)
+    expect(isNoteEmpty({title: '', todos: [{id: 'a', text: 'y', done: false}]})).toBe(false)
   })
 })
 
@@ -120,7 +118,7 @@ describe('previewTodos', () => {
 
   it('handles larger overflows', () => {
     const r = previewTodos(todos(10), 3)
-    expect(r.visible.map((t) => t.id)).toEqual(['t0', 't1', 't2'])
+    expect(r.visible.map(t => t.id)).toEqual(['t0', 't1', 't2'])
     expect(r.hiddenCount).toBe(7)
   })
 

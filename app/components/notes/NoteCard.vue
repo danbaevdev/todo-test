@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { noteTitle } from '~/utils/note'
-import type { Note } from '~/types/note'
+import {computed} from 'vue'
+import {noteTitle} from '~/utils/note'
+import type {Note} from '~/types/note'
 
-const props = defineProps<{ note: Note }>()
-const emit = defineEmits<{ delete: [] }>()
+const props = defineProps<{note: Note}>()
+const emit = defineEmits<{delete: []}>()
 
-const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
+const doneCount = computed(() => props.note.todos.filter(t => t.done).length)
 const title = computed(() => noteTitle(props.note))
 </script>
 
@@ -62,6 +62,7 @@ const title = computed(() => noteTitle(props.note))
   display: flex;
   align-items: center;
   gap: var(--space-2);
+
   /* Pin to the bottom so action rows line up across cards of unequal height. */
   margin-top: auto;
   padding-top: var(--space-1);

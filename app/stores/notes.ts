@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
-import { createId } from '~/utils/id'
-import { debounce } from '~/utils/debounce'
-import { createNotesStorage, NOTES_KEY, type NotesStorage } from '~/utils/storage'
-import type { Note, Todo } from '~/types/note'
+import {defineStore} from 'pinia'
+import {computed, ref} from 'vue'
+import {createId} from '~/utils/id'
+import {debounce} from '~/utils/debounce'
+import {createNotesStorage, NOTES_KEY, type NotesStorage} from '~/utils/storage'
+import type {Note, Todo} from '~/types/note'
 
 const PERSIST_DELAY = 500
 
@@ -26,16 +26,14 @@ export const useNotesStore = defineStore('notes', () => {
     persist()
   }
 
-  const sortedNotes = computed(() =>
-    [...notes.value].sort((a, b) => b.updatedAt - a.updatedAt),
-  )
+  const sortedNotes = computed(() => [...notes.value].sort((a, b) => b.updatedAt - a.updatedAt))
 
   function getNote(id: string): Note | undefined {
-    return notes.value.find((n) => n.id === id)
+    return notes.value.find(n => n.id === id)
   }
 
   function hasNote(id: string): boolean {
-    return notes.value.some((n) => n.id === id)
+    return notes.value.some(n => n.id === id)
   }
 
   function reloadFromStorage() {
@@ -91,7 +89,7 @@ export const useNotesStore = defineStore('notes', () => {
   }
 
   function deleteNote(id: string) {
-    const index = notes.value.findIndex((n) => n.id === id)
+    const index = notes.value.findIndex(n => n.id === id)
     if (index === -1) return
     notes.value.splice(index, 1)
     schedulePersist()

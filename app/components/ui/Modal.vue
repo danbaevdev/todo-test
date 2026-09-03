@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, useId } from 'vue'
-import { useFocusTrap } from '~/composables/useFocusTrap'
+import {onBeforeUnmount, onMounted, ref, useId} from 'vue'
+import {useFocusTrap} from '~/composables/useFocusTrap'
 
 const props = withDefaults(
   defineProps<{
@@ -8,10 +8,10 @@ const props = withDefaults(
     /** Close when the backdrop is clicked. */
     dismissible?: boolean
   }>(),
-  { dismissible: true },
+  {dismissible: true},
 )
 
-const emit = defineEmits<{ close: [] }>()
+const emit = defineEmits<{close: []}>()
 
 const dialog = ref<HTMLElement | null>(null)
 const titleId = useId()

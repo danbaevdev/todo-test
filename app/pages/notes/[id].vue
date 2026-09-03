@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
-import { onBeforeRouteLeave } from 'vue-router'
-import { useEditHistory } from '~/composables/useEditHistory'
-import { useNoteDraft } from '~/composables/useNoteDraft'
-import { useUndoRedoShortcuts } from '~/composables/useUndoRedoShortcuts'
-import { useNotesStore } from '~/stores/notes'
-import { isNoteEmpty, sanitizeNoteContent } from '~/utils/note'
-import type { Note } from '~/types/note'
+import {computed, nextTick, ref, watch} from 'vue'
+import {onBeforeRouteLeave} from 'vue-router'
+import {useEditHistory} from '~/composables/useEditHistory'
+import {useNoteDraft} from '~/composables/useNoteDraft'
+import {useUndoRedoShortcuts} from '~/composables/useUndoRedoShortcuts'
+import {useNotesStore} from '~/stores/notes'
+import {isNoteEmpty, sanitizeNoteContent} from '~/utils/note'
+import type {Note} from '~/types/note'
 
 const route = useRoute()
 const router = useRouter()
@@ -16,14 +16,14 @@ const id = route.params.id as string
 
 const source = store.getNote(id)
 if (!source) {
-  throw createError({ statusCode: 404, statusMessage: 'Заметка не найдена', fatal: true })
+  throw createError({statusCode: 404, statusMessage: 'Заметка не найдена', fatal: true})
 }
 
 const history = useEditHistory(source)
-const { note, canUndo, canRedo } = history
+const {note, canUndo, canRedo} = history
 
 function serialize(value: Pick<Note, 'title' | 'todos'>) {
-  return JSON.stringify({ title: value.title, todos: value.todos })
+  return JSON.stringify({title: value.title, todos: value.todos})
 }
 
 const deletedElsewhere = ref(false)
@@ -53,7 +53,7 @@ function discardDraft() {
 // --- External deletion (other tab) ---------------------------------------
 watch(
   () => store.hasNote(id),
-  (exists) => {
+  exists => {
     if (!exists) deletedElsewhere.value = true
   },
 )
@@ -119,7 +119,7 @@ function addTodo() {
   // Bring the new row (and the add button) into view — it may be under the fold
   // or the fixed mobile toolbar.
   nextTick(() => {
-    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+    window.scrollTo({top: document.documentElement.scrollHeight, behavior: 'smooth'})
   })
 }
 
@@ -207,6 +207,7 @@ function goBack() {
 .editor {
   display: grid;
   gap: var(--space-6);
+
   /* Room for the fixed bottom toolbar on mobile (2 rows + padding + safe area). */
   padding-bottom: calc(
     var(--control-height-lg) * 2 + var(--space-3) * 3 + env(safe-area-inset-bottom, 0px)

@@ -1,10 +1,10 @@
-import { describe, expect, it } from 'vitest'
-import { HISTORY_LIMIT, useEditHistory } from '~/composables/useEditHistory'
-import { makeNote } from './helpers'
+import {describe, expect, it} from 'vitest'
+import {HISTORY_LIMIT, useEditHistory} from '~/composables/useEditHistory'
+import {makeNote} from './helpers'
 
 describe('useEditHistory', () => {
   it('coalesces continuous typing into one entry until sealed', () => {
-    const h = useEditHistory(makeNote({ title: '' }))
+    const h = useEditHistory(makeNote({title: ''}))
 
     h.setTitle('H')
     h.setTitle('He')
@@ -20,7 +20,7 @@ describe('useEditHistory', () => {
   })
 
   it('starts a new entry after seal (blur / pause)', () => {
-    const h = useEditHistory(makeNote({ title: '' }))
+    const h = useEditHistory(makeNote({title: ''}))
 
     h.setTitle('foo')
     h.seal()
@@ -37,8 +37,8 @@ describe('useEditHistory', () => {
     const note = makeNote({
       title: '',
       todos: [
-        { id: 't1', text: '', done: false },
-        { id: 't2', text: '', done: false },
+        {id: 't1', text: '', done: false},
+        {id: 't2', text: '', done: false},
       ],
     })
     const h = useEditHistory(note)
@@ -51,9 +51,7 @@ describe('useEditHistory', () => {
   })
 
   it('treats checkbox toggle, add and remove as atomic entries', () => {
-    const h = useEditHistory(
-      makeNote({ todos: [{ id: 't1', text: 'a', done: false }] }),
-    )
+    const h = useEditHistory(makeNote({todos: [{id: 't1', text: 'a', done: false}]}))
 
     h.toggleTodo('t1')
     h.toggleTodo('t1')
@@ -63,7 +61,7 @@ describe('useEditHistory', () => {
     expect(h.historyDepth.value).toBe(4)
 
     h.undo() // restore removed todo
-    expect(h.note.value.todos.map((t) => t.id)).toEqual(['t1', newId])
+    expect(h.note.value.todos.map(t => t.id)).toEqual(['t1', newId])
     h.undo() // remove added todo
     expect(h.note.value.todos).toHaveLength(1)
     h.undo() // untoggle
@@ -73,7 +71,7 @@ describe('useEditHistory', () => {
   })
 
   it('redo replays an undone operation', () => {
-    const h = useEditHistory(makeNote({ title: '' }))
+    const h = useEditHistory(makeNote({title: ''}))
     h.setTitle('done')
     h.seal()
     h.undo()
@@ -83,7 +81,7 @@ describe('useEditHistory', () => {
   })
 
   it('drops the redo branch when a new op follows an undo', () => {
-    const h = useEditHistory(makeNote({ title: '' }))
+    const h = useEditHistory(makeNote({title: ''}))
     h.setTitle('a')
     h.seal()
     h.setTitle('ab')
@@ -99,7 +97,7 @@ describe('useEditHistory', () => {
   })
 
   it('caps history at the limit without storing full note copies', () => {
-    const h2 = useEditHistory(makeNote({ title: 'base' }))
+    const h2 = useEditHistory(makeNote({title: 'base'}))
     for (let i = 0; i < HISTORY_LIMIT + 15; i++) {
       h2.setTitle(`v${i}`)
       h2.seal()
@@ -118,10 +116,10 @@ describe('useEditHistory', () => {
   })
 
   it('reset wipes history and rebases', () => {
-    const h = useEditHistory(makeNote({ title: 'a' }))
+    const h = useEditHistory(makeNote({title: 'a'}))
     h.setTitle('b')
     h.seal()
-    h.reset(makeNote({ title: 'fresh' }))
+    h.reset(makeNote({title: 'fresh'}))
     expect(h.note.value.title).toBe('fresh')
     expect(h.canUndo.value).toBe(false)
     expect(h.canRedo.value).toBe(false)

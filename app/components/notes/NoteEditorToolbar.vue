@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ariaKeyshortcuts } from '~/utils/platform'
+import {ariaKeyshortcuts} from '~/utils/platform'
 
 defineProps<{
   canUndo: boolean
@@ -15,8 +15,8 @@ const emit = defineEmits<{
   redo: []
 }>()
 
-const undoShortcut = { key: 'Z' } as const
-const redoShortcut = { key: 'Z', shift: true } as const
+const undoShortcut = {key: 'Z'} as const
+const redoShortcut = {key: 'Z', shift: true} as const
 </script>
 
 <template>
@@ -84,7 +84,7 @@ const redoShortcut = { key: 'Z', shift: true } as const
 
 .toolbar__actions {
   position: fixed;
-  inset: auto 0 0 0;
+  inset: auto 0 0;
   z-index: var(--z-sticky);
   display: grid;
   gap: var(--space-2);
@@ -99,9 +99,11 @@ const redoShortcut = { key: 'Z', shift: true } as const
   grid-template-columns: 1fr 1fr;
   gap: var(--space-2);
 }
+
 .toolbar__history :deep(.tooltip-trigger) {
   display: flex;
 }
+
 .toolbar__history :deep(.btn) {
   width: 100%;
   height: var(--control-height-lg);
@@ -137,6 +139,7 @@ const redoShortcut = { key: 'Z', shift: true } as const
     display: flex;
     gap: var(--space-2);
   }
+
   /* Restore the icon-button shape (a touch wider than tall). */
   .toolbar__history :deep(.btn) {
     width: calc(var(--icon-h) + var(--space-2));

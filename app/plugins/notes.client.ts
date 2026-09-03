@@ -1,4 +1,4 @@
-import { useNotesStore } from '~/stores/notes'
+import {useNotesStore} from '~/stores/notes'
 
 export default defineNuxtPlugin(() => {
   useNotesStore().init()

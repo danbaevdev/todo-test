@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Todo } from '~/types/note'
+import type {Todo} from '~/types/note'
 
-defineProps<{ todos: Todo[]; autofocusId?: string | null }>()
+defineProps<{todos: Todo[]; autofocusId?: string | null}>()
 
 const emit = defineEmits<{
   toggle: [string]

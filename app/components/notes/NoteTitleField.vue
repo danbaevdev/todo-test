@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ modelValue: string }>()
+defineProps<{modelValue: string}>()
 const emit = defineEmits<{
   'update:modelValue': [string]
   pause: []

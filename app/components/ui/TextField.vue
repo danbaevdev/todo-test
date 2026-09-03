@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from 'vue'
-import { debounce } from '~/utils/debounce'
+import {computed, onBeforeUnmount, ref} from 'vue'
+import {debounce} from '~/utils/debounce'
 
-defineOptions({ inheritAttrs: false })
+defineOptions({inheritAttrs: false})
 
 const props = withDefaults(
   defineProps<{
@@ -16,7 +16,7 @@ const props = withDefaults(
     /** Show a × button to wipe the value (single-line only). */
     clearable?: boolean
   }>(),
-  { pauseDelay: 400, multiline: false, invalid: false, clearable: false },
+  {pauseDelay: 400, multiline: false, invalid: false, clearable: false},
 )
 
 const emit = defineEmits<{
@@ -31,9 +31,7 @@ const emit = defineEmits<{
 const control = ref<HTMLInputElement | HTMLTextAreaElement | null>(null)
 const emitPause = debounce(() => emit('pause'), props.pauseDelay)
 
-const showClear = computed(
-  () => props.clearable && !props.multiline && props.modelValue.length > 0,
-)
+const showClear = computed(() => props.clearable && !props.multiline && props.modelValue.length > 0)
 
 function onInput(event: Event) {
   emit('update:modelValue', (event.target as HTMLInputElement | HTMLTextAreaElement).value)
@@ -68,7 +66,7 @@ onBeforeUnmount(() => emitPause.cancel())
       ref="control"
       v-bind="$attrs"
       class="field"
-      :class="{ 'field--invalid': invalid, 'field--has-clear': showClear }"
+      :class="{'field--invalid': invalid, 'field--has-clear': showClear}"
       :type="multiline ? undefined : 'text'"
       :value="modelValue"
       :placeholder="placeholder"
@@ -110,7 +108,9 @@ onBeforeUnmount(() => emitPause.cancel())
   background: var(--color-surface);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
-  transition: border-color var(--transition-fast), background-color var(--transition-fast),
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
     box-shadow var(--transition-fast);
 }
 

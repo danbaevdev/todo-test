@@ -46,11 +46,19 @@ SPA-приложение для заметок со списками задач.
 
 ```bash
 npm install
-npm run dev          # http://localhost:3000
-npm run test         # unit-тесты (Vitest): история изменений, стор, хранилище
-npm run typecheck    # vue-tsc, strict
-npm run build        # продакшн-сборка в .output
+npm run dev            # http://localhost:3000
+npm run test           # unit-тесты (Vitest): история изменений, стор, хранилище
+npm run typecheck      # vue-tsc, strict
+npm run build          # продакшн-сборка в .output
+
+npm run lint           # ESLint (@nuxt/eslint, flat config)
+npm run lint:style     # Stylelint (CSS + <style> в .vue)
+npm run format         # Prettier — форматирование всего
+npm run format:check   # Prettier — проверка без записи
 ```
+
+Стиль: одинарные кавычки, без `;`, без пробелов в `{}`, `arrow` без скобок для одного
+аргумента (`.prettierrc.json`).
 
 ## Docker
 

@@ -5,10 +5,10 @@ const props = withDefaults(
     label?: string
     disabled?: boolean
   }>(),
-  { disabled: false },
+  {disabled: false},
 )
 
-const emit = defineEmits<{ 'update:modelValue': [boolean] }>()
+const emit = defineEmits<{'update:modelValue': [boolean]}>()
 
 function onChange(event: Event) {
   if (props.disabled) return
@@ -25,7 +25,7 @@ function onKeydown(event: KeyboardEvent) {
 </script>
 
 <template>
-  <label class="checkbox" :class="{ 'checkbox--disabled': disabled }">
+  <label class="checkbox" :class="{'checkbox--disabled': disabled}">
     <input
       type="checkbox"
       class="checkbox__input"
@@ -33,11 +33,13 @@ function onKeydown(event: KeyboardEvent) {
       :disabled="disabled"
       @change="onChange"
       @keydown="onKeydown"
-    >
+    />
     <span class="checkbox__box" aria-hidden="true">
       <Icon name="check" />
     </span>
-    <span v-if="label || $slots.default" class="checkbox__label"><slot>{{ label }}</slot></span>
+    <span v-if="label || $slots.default" class="checkbox__label"
+      ><slot>{{ label }}</slot></span
+    >
   </label>
 </template>
 
@@ -52,10 +54,12 @@ function onKeydown(event: KeyboardEvent) {
 .checkbox--disabled {
   cursor: not-allowed;
 }
+
 .checkbox--disabled .checkbox__box {
   opacity: 0.5;
   background: var(--color-surface-alt);
 }
+
 .checkbox--disabled .checkbox__label {
   color: var(--color-text-muted);
 }
@@ -79,7 +83,10 @@ function onKeydown(event: KeyboardEvent) {
   border-radius: var(--radius-sm);
   background: var(--color-surface);
   color: transparent;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
 }
 
 .checkbox__input:checked + .checkbox__box {

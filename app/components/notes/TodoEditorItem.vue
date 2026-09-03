@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import type { Todo } from '~/types/note'
+import {onMounted, ref} from 'vue'
+import type {Todo} from '~/types/note'
 
-const props = defineProps<{ todo: Todo; autofocus?: boolean }>()
+const props = defineProps<{todo: Todo; autofocus?: boolean}>()
 
 const root = ref<HTMLElement | null>(null)
 

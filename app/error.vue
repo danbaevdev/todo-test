@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app'
+import type {NuxtError} from '#app'
 
-defineProps<{ error: NuxtError }>()
+defineProps<{error: NuxtError}>()
 </script>
 
 <template>
@@ -11,9 +11,7 @@ defineProps<{ error: NuxtError }>()
       <h1 class="error__title">
         {{ error.statusCode === 404 ? 'Заметка не найдена' : 'Что-то пошло не так' }}
       </h1>
-      <Button color="primary" @click="clearError({ redirect: '/' })">
-        На главную
-      </Button>
+      <Button color="primary" @click="clearError({redirect: '/'})"> На главную </Button>
     </div>
   </NuxtLayout>
 </template>

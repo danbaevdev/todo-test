@@ -7,10 +7,10 @@ withDefaults(
     cancelLabel?: string
     danger?: boolean
   }>(),
-  { confirmLabel: 'Подтвердить', cancelLabel: 'Отмена', danger: false },
+  {confirmLabel: 'Подтвердить', cancelLabel: 'Отмена', danger: false},
 )
 
-const emit = defineEmits<{ confirm: []; cancel: [] }>()
+const emit = defineEmits<{confirm: []; cancel: []}>()
 </script>
 
 <template>

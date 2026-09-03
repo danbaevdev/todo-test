@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { formatShortcut, isMacOS, type ShortcutParts } from '~/utils/platform'
+import {formatShortcut, isMacOS, type ShortcutParts} from '~/utils/platform'
 
-const props = defineProps<{ shortcut: ShortcutParts }>()
+const props = defineProps<{shortcut: ShortcutParts}>()
 
 const mac = isMacOS()
 const winLabel = formatShortcut(props.shortcut, false)
@@ -27,6 +27,6 @@ const winLabel = formatShortcut(props.shortcut, false)
   font-size: 0.9em;
   padding: 0 var(--space-1);
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, currentColor 14%, transparent);
+  background: color-mix(in srgb, currentcolor 14%, transparent);
 }
 </style>

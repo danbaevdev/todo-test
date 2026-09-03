@@ -6,7 +6,10 @@ export interface Debounced<A extends unknown[]> {
   cancel(): void
 }
 
-export function debounce<A extends unknown[]>(fn: (...args: A) => void, wait: number): Debounced<A> {
+export function debounce<A extends unknown[]>(
+  fn: (...args: A) => void,
+  wait: number,
+): Debounced<A> {
   let timer: ReturnType<typeof setTimeout> | null = null
   let lastArgs: A | null = null
 

@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { previewTodos } from '~/utils/note'
-import type { Todo } from '~/types/note'
+import {computed} from 'vue'
+import {previewTodos} from '~/utils/note'
+import type {Todo} from '~/types/note'
 
-const props = withDefaults(
-  defineProps<{ todos: Todo[]; max?: number }>(),
-  { max: 3 },
-)
+const props = withDefaults(defineProps<{todos: Todo[]; max?: number}>(), {max: 3})
 
 const preview = computed(() => previewTodos(props.todos, props.max))
 </script>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, ref, useId, useSlots, watch } from 'vue'
+import {nextTick, onBeforeUnmount, ref, useId, useSlots, watch} from 'vue'
 
 type Placement = 'top' | 'bottom' | 'left' | 'right'
 
@@ -15,7 +15,7 @@ const props = withDefaults(
     delay?: number
     disabled?: boolean
   }>(),
-  { placement: 'top', offset: 8, delay: 120, disabled: false },
+  {placement: 'top', offset: 8, delay: 120, disabled: false},
 )
 
 /** Minimum distance the tooltip keeps from the viewport edges. */
@@ -29,7 +29,7 @@ const tipEl = ref<HTMLElement | null>(null)
 const open = ref(false)
 const ready = ref(false)
 const resolved = ref<Placement>(props.placement)
-const coords = ref({ top: 0, left: 0 })
+const coords = ref({top: 0, left: 0})
 
 let showTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -78,10 +78,16 @@ function place() {
   }
 
   // Keep the whole tooltip on screen with a margin.
-  left = Math.min(Math.max(left, VIEWPORT_MARGIN), Math.max(VIEWPORT_MARGIN, vw - w - VIEWPORT_MARGIN))
-  top = Math.min(Math.max(top, VIEWPORT_MARGIN), Math.max(VIEWPORT_MARGIN, vh - h - VIEWPORT_MARGIN))
+  left = Math.min(
+    Math.max(left, VIEWPORT_MARGIN),
+    Math.max(VIEWPORT_MARGIN, vw - w - VIEWPORT_MARGIN),
+  )
+  top = Math.min(
+    Math.max(top, VIEWPORT_MARGIN),
+    Math.max(VIEWPORT_MARGIN, vh - h - VIEWPORT_MARGIN),
+  )
 
-  coords.value = { top, left }
+  coords.value = {top, left}
   ready.value = true
 }
 
@@ -181,24 +187,31 @@ onBeforeUnmount(() => {
 
 .tooltip-enter-active,
 .tooltip-leave-active {
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
 }
+
 .tooltip-enter-from,
 .tooltip-leave-to {
   opacity: 0;
 }
+
 .tooltip--top.tooltip-enter-from,
 .tooltip--top.tooltip-leave-to {
   transform: translateY(3px);
 }
+
 .tooltip--bottom.tooltip-enter-from,
 .tooltip--bottom.tooltip-leave-to {
   transform: translateY(-3px);
 }
+
 .tooltip--left.tooltip-enter-from,
 .tooltip--left.tooltip-leave-to {
   transform: translateX(3px);
 }
+
 .tooltip--right.tooltip-enter-from,
 .tooltip--right.tooltip-leave-to {
   transform: translateX(-3px);

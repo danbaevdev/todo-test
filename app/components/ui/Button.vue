@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NuxtLink } from '#components'
+import {NuxtLink} from '#components'
 
 const props = withDefaults(
   defineProps<{
@@ -20,7 +20,7 @@ const props = withDefaults(
     /** When set, renders as a router link with button styling. */
     to?: string
   }>(),
-  { variant: 'solid', color: 'neutral', size: 'md', icon: false, type: 'button', disabled: false },
+  {variant: 'solid', color: 'neutral', size: 'md', icon: false, type: 'button', disabled: false},
 )
 
 const isLink = computed(() => !!props.to && !props.disabled)
@@ -34,7 +34,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
     :disabled="isLink ? undefined : disabled"
     :aria-label="icon ? label : undefined"
     :title="icon && !noTitle ? label : undefined"
-    :class="['btn', `btn--${variant}`, `btn--${color}`, `btn--${size}`, { 'btn--icon': icon }]"
+    :class="['btn', `btn--${variant}`, `btn--${color}`, `btn--${size}`, {'btn--icon': icon}]"
   >
     <slot />
   </component>
@@ -44,6 +44,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
 .btn {
   --icon-h: var(--control-height);
   --icon-glyph: var(--icon-size-md);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -53,8 +54,11 @@ const isLink = computed(() => !!props.to && !props.disabled)
   font-weight: var(--font-weight-medium);
   line-height: 1;
   text-decoration: none;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast),
-    color var(--transition-fast), transform var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .btn:hover {
@@ -80,25 +84,31 @@ const isLink = computed(() => !!props.to && !props.disabled)
 .btn--xs {
   --icon-h: var(--control-height-xs);
   --icon-glyph: var(--icon-size-xs);
+
   min-height: var(--control-height-xs);
   padding: var(--space-1) var(--space-2);
   font-size: var(--font-size-xs);
 }
+
 .btn--sm {
   --icon-h: var(--control-height-sm);
   --icon-glyph: var(--icon-size-sm);
+
   min-height: var(--control-height-sm);
   padding: var(--space-1) var(--space-3);
   font-size: var(--font-size-xs);
 }
+
 .btn--md {
   min-height: var(--control-height);
   padding: var(--space-1) var(--space-4);
   font-size: var(--font-size-sm);
 }
+
 .btn--lg {
   --icon-h: var(--control-height-lg);
   --icon-glyph: var(--icon-size-lg);
+
   min-height: var(--control-height-lg);
   padding: var(--space-2) var(--space-5);
   font-size: var(--font-size-md);
@@ -113,6 +123,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
   padding: 0;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
+
   /* The slotted <Icon> is 1em — this sets its rendered size. */
   font-size: var(--icon-glyph);
 }
@@ -125,6 +136,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
   --c-solid-fg: var(--color-text);
   --c-solid-bg-hover: var(--color-border);
 }
+
 .btn--primary {
   --c-main: var(--color-primary);
   --c-border: var(--color-primary);
@@ -132,6 +144,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
   --c-solid-fg: var(--color-on-fill);
   --c-solid-bg-hover: var(--color-primary-fill-hover);
 }
+
 .btn--danger {
   --c-main: var(--color-danger);
   --c-border: var(--color-danger);
@@ -145,9 +158,11 @@ const isLink = computed(() => !!props.to && !props.disabled)
   background: var(--c-solid-bg);
   color: var(--c-solid-fg);
 }
+
 .btn--solid:not(:disabled):hover {
   background: var(--c-solid-bg-hover);
 }
+
 .btn--solid:not(:disabled):active {
   background: color-mix(in srgb, var(--c-solid-bg-hover) 88%, #000);
 }
@@ -157,9 +172,11 @@ const isLink = computed(() => !!props.to && !props.disabled)
   color: var(--c-main);
   border-color: var(--c-border);
 }
+
 .btn--outline:not(:disabled):hover {
   background: color-mix(in srgb, var(--c-main) 10%, transparent);
 }
+
 .btn--outline:not(:disabled):active {
   background: color-mix(in srgb, var(--c-main) 18%, transparent);
 }
@@ -168,9 +185,11 @@ const isLink = computed(() => !!props.to && !props.disabled)
   background: transparent;
   color: var(--c-main);
 }
+
 .btn--ghost:not(:disabled):hover {
   background: color-mix(in srgb, var(--c-main) 10%, transparent);
 }
+
 .btn--ghost:not(:disabled):active {
   background: color-mix(in srgb, var(--c-main) 18%, transparent);
 }
@@ -181,13 +200,16 @@ const isLink = computed(() => !!props.to && !props.disabled)
   padding-inline: 0;
   color: var(--color-text-muted);
 }
+
 .btn--plain.btn--icon {
   width: auto;
   height: auto;
 }
+
 .btn--plain:not(:disabled):hover {
   color: var(--c-main);
 }
+
 .btn--plain:focus-visible {
   outline-width: 1px;
   outline-offset: 1px;

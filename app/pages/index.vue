@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useNotesStore } from '~/stores/notes'
-import type { Note } from '~/types/note'
+import {ref} from 'vue'
+import {storeToRefs} from 'pinia'
+import {useNotesStore} from '~/stores/notes'
+import type {Note} from '~/types/note'
 
 const store = useNotesStore()
-const { sortedNotes, loaded } = storeToRefs(store)
+const {sortedNotes, loaded} = storeToRefs(store)
 const router = useRouter()
 
 const pendingDelete = ref<Note | null>(null)
