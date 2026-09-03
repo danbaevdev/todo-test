@@ -67,3 +67,15 @@ docker-compose up --build
 ```
 
 Приложение будет доступно на `http://localhost:3000`.
+
+## Деплой (GitHub Pages)
+
+Пуш в `main` → workflow `.github/workflows/deploy.yml` прогоняет линт/тесты,
+делает `nuxt generate` с `NUXT_APP_BASE_URL=/todo-test/` и публикует
+`.output/public` на Pages.
+
+Один раз включить в репозитории: **Settings → Pages → Build and deployment →
+Source: GitHub Actions**.
+
+Живёт на `https://danbaevdev.github.io/todo-test/`. Deep-ссылки работают —
+`nuxt generate` кладёт `404.html` = SPA-оболочку.

@@ -132,7 +132,7 @@ function goBack() {
 
 <template>
   <div class="editor">
-    <Button class="editor__back" variant="ghost" @click="goBack">
+    <Button class="editor__back" variant="plain" @click="goBack">
       <Icon name="arrow-left" />
       Все заметки
     </Button>
@@ -223,8 +223,6 @@ function goBack() {
 /* Ghost button pulled left by its own inline padding so the label sits on the grid edge. */
 .editor__back {
   justify-self: start;
-  margin-left: calc(var(--space-4) * -1);
-  color: var(--color-text-muted);
 }
 
 .editor__back :deep(svg) {
