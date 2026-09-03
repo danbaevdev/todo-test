@@ -27,7 +27,7 @@ const emit = defineEmits<{
     <TextField
       clearable
       :model-value="todo.text"
-      placeholder="Текст пункта"
+      placeholder="Что нужно сделать?"
       aria-label="Текст пункта"
       @update:model-value="emit('editText', $event)"
       @pause="emit('pause')"

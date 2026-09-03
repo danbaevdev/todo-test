@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import { useEditHistory } from '~/composables/useEditHistory'
 import { useNoteDraft } from '~/composables/useNoteDraft'
@@ -116,6 +116,11 @@ function onEditText(todoId: string, value: string) {
 
 function addTodo() {
   lastAddedId.value = history.addTodo()
+  // Bring the new row (and the add button) into view — it may be under the fold
+  // or the fixed mobile toolbar.
+  nextTick(() => {
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+  })
 }
 
 /** Go back if we came from somewhere in the app, otherwise to the notes list. */
