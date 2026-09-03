@@ -27,6 +27,9 @@ function serialize(value: Pick<Note, 'title' | 'todos'>) {
 }
 
 const deletedElsewhere = ref(false)
+/** Set once we start navigating away, so our own teardown delete (an empty
+ *  note dropped in the route guard) isn't mistaken for an external deletion. */
+let leaving = false
 
 const isDirty = computed(() => {
   const current = store.getNote(id)
@@ -54,7 +57,7 @@ function discardDraft() {
 watch(
   () => store.hasNote(id),
   exists => {
-    if (!exists) deletedElsewhere.value = true
+    if (!exists && !leaving) deletedElsewhere.value = true
   },
 )
 
@@ -75,6 +78,7 @@ useUndoRedoShortcuts({
  * behaves the same way).
  */
 onBeforeRouteLeave(() => {
+  leaving = true
   draft.clear()
   if (store.hasNote(id) && isNoteEmpty(note.value)) {
     store.deleteNote(id)
@@ -83,6 +87,7 @@ onBeforeRouteLeave(() => {
 })
 
 function leave() {
+  leaving = true
   router.push('/')
 }
 
