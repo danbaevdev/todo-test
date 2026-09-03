@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
 
 .modal__dialog {
   width: 100%;
-  max-width: 420px;
+  max-width: var(--dialog-width);
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);

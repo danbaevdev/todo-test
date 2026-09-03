@@ -34,7 +34,7 @@ function onClick(event: MouseEvent) {
       @click="onClick"
     >
     <span class="checkbox__box" aria-hidden="true">
-      <Icon name="check" :size="14" />
+      <Icon name="check" />
     </span>
     <span v-if="label || $slots.default" class="checkbox__label"><slot>{{ label }}</slot></span>
   </label>
@@ -63,9 +63,10 @@ function onClick(event: MouseEvent) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
   flex-shrink: 0;
+  font-size: var(--icon-size-xs); /* sizes the 1em check <Icon> */
   border: 1.5px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   background: var(--color-surface);

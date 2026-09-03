@@ -70,7 +70,6 @@ svg {
 /*
  * Page container: horizontally centered, breakpoint-stepped max width,
  * responsive side gutters. Reuse anywhere a block should align to the page grid.
- * Breakpoints: tablet >= 768px, desktop >= 1024px.
  */
 .container {
   width: 100%;
@@ -78,14 +77,14 @@ svg {
   padding-inline: var(--space-4);
 }
 
-@media (min-width: 768px) {
+@media (--bp-md) {
   .container {
-    max-width: 720px;
+    max-width: var(--container-md);
     padding-inline: var(--space-6);
   }
 }
 
-@media (min-width: 1024px) {
+@media (--bp-lg) {
   .container {
     max-width: var(--container-max);
   }

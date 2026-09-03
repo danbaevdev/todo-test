@@ -56,10 +56,19 @@
   --z-toast: 1100;
 
   /* Layout */
+  --container-md: 720px;
   --container-max: 880px;
+  --dialog-width: 420px;
+
+  /* Control dimensions */
   --control-height-sm: 28px;
   --control-height: 32px;
   --control-height-lg: 40px;
+  --checkbox-size: 20px;
+  --icon-size-xs: 14px;
+  --icon-size-sm: 16px;
+  --icon-size-md: 18px;
+  --icon-size-lg: 20px;
 
   /* Semantic colors — light theme */
   --color-bg: #f7f8fa;

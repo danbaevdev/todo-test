@@ -1,0 +1,10 @@
+/*
+ * Responsive breakpoints as tokens. `@media` can't read `var()`, so these are
+ * CSS custom media queries (Media Queries Level 5), injected into every file by
+ * postcss-global-data + resolved by postcss-custom-media (see nuxt.config).
+ *
+ * Usage:  @media (--bp-md) { … }
+ */
+@custom-media --bp-sm (min-width: 480px);
+@custom-media --bp-md (min-width: 768px);
+@custom-media --bp-lg (min-width: 1024px);

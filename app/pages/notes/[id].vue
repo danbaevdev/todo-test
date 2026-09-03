@@ -123,7 +123,7 @@ function goBack() {
 <template>
   <div class="editor">
     <Button class="editor__back" variant="ghost" @click="goBack">
-      <Icon name="arrow-left" :size="16" />
+      <Icon name="arrow-left" />
       Все заметки
     </Button>
 
@@ -204,6 +204,10 @@ function goBack() {
   justify-self: start;
   margin-left: calc(var(--space-4) * -1);
   color: var(--color-text-muted);
+}
+
+.editor__back :deep(svg) {
+  font-size: var(--icon-size-sm);
 }
 
 .editor__todos {

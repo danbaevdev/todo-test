@@ -1,20 +1,14 @@
 <script setup lang="ts">
 import { ICONS, type IconName } from './icons'
 
-withDefaults(
-  defineProps<{
-    name: IconName
-    /** Rendered width/height in px (or any CSS length). */
-    size?: number | string
-  }>(),
-  { size: 18 },
-)
+defineProps<{ name: IconName }>()
 </script>
 
 <template>
+  <!-- Sized via CSS: 1em scales with the parent's font-size. -->
   <svg
-    :width="size"
-    :height="size"
+    width="1em"
+    height="1em"
     viewBox="0 0 24 24"
     fill="none"
     aria-hidden="true"

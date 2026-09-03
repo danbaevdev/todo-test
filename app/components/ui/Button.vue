@@ -41,7 +41,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
 <style scoped>
 .btn {
   --icon-h: var(--control-height);
-  --icon-glyph: 18px;
+  --icon-glyph: var(--icon-size-md);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -72,7 +72,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
 /* --- Size --------------------------------------------------------------- */
 .btn--sm {
   --icon-h: var(--control-height-sm);
-  --icon-glyph: 16px;
+  --icon-glyph: var(--icon-size-sm);
   min-height: var(--control-height-sm);
   padding: var(--space-1) var(--space-3);
   font-size: var(--font-size-xs);
@@ -84,7 +84,7 @@ const isLink = computed(() => !!props.to && !props.disabled)
 }
 .btn--lg {
   --icon-h: var(--control-height-lg);
-  --icon-glyph: 20px;
+  --icon-glyph: var(--icon-size-lg);
   min-height: var(--control-height-lg);
   padding: var(--space-2) var(--space-5);
   font-size: var(--font-size-md);
@@ -99,10 +99,8 @@ const isLink = computed(() => !!props.to && !props.disabled)
   padding: 0;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
-}
-.btn--icon :slotted(svg) {
-  width: var(--icon-glyph);
-  height: var(--icon-glyph);
+  /* The slotted <Icon> is 1em — this sets its rendered size. */
+  font-size: var(--icon-glyph);
 }
 
 /* --- Color: exposes role tokens the variants consume ---------------------- */

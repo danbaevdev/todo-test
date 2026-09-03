@@ -48,7 +48,7 @@ const emit = defineEmits<{
   justify-self: stretch;
 }
 
-@media (min-width: 768px) {
+@media (--bp-md) {
   .todo-list__add {
     justify-self: start;
   }

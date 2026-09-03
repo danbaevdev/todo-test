@@ -10,6 +10,16 @@ export default defineNuxtConfig({
 
   css: ['~/assets/styles/tokens.css', '~/assets/styles/base.css'],
 
+  // Breakpoint tokens: inject @custom-media into every file, then resolve them.
+  postcss: {
+    plugins: {
+      '@csstools/postcss-global-data': {
+        files: ['app/assets/styles/breakpoints.css'],
+      },
+      'postcss-custom-media': {},
+    },
+  },
+
   typescript: {
     strict: true,
     typeCheck: false,
