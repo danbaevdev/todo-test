@@ -30,7 +30,7 @@ const emit = defineEmits<{
     </ul>
     <p v-else class="todo-list__empty">Пунктов пока нет.</p>
 
-    <Button class="todo-list__add" variant="outline" size="lg" @click="emit('add')">
+    <Button class="todo-list__add" variant="outline" @click="emit('add')">
       + Добавить пункт
     </Button>
   </div>

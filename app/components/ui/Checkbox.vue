@@ -74,9 +74,9 @@ function onClick(event: MouseEvent) {
 }
 
 .checkbox__input:checked + .checkbox__box {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-text-inverse);
+  background: var(--color-primary-fill);
+  border-color: var(--color-primary-fill);
+  color: var(--color-on-fill);
 }
 
 /* The real input is visually hidden, so mirror the focus outline onto the box. */

@@ -116,16 +116,16 @@ const isLink = computed(() => !!props.to && !props.disabled)
 .btn--primary {
   --c-main: var(--color-primary);
   --c-border: var(--color-primary);
-  --c-solid-bg: var(--color-primary);
-  --c-solid-fg: var(--color-text-inverse);
-  --c-solid-bg-hover: var(--color-primary-hover);
+  --c-solid-bg: var(--color-primary-fill);
+  --c-solid-fg: var(--color-on-fill);
+  --c-solid-bg-hover: var(--color-primary-fill-hover);
 }
 .btn--danger {
   --c-main: var(--color-danger);
   --c-border: var(--color-danger);
-  --c-solid-bg: var(--color-danger);
-  --c-solid-fg: var(--color-text-inverse);
-  --c-solid-bg-hover: var(--color-danger-hover);
+  --c-solid-bg: var(--color-danger-fill);
+  --c-solid-fg: var(--color-on-fill);
+  --c-solid-bg-hover: var(--color-danger-fill-hover);
 }
 
 /* --- Variant ------------------------------------------------------------- */

@@ -82,6 +82,13 @@
   --color-danger-soft: #fde3e3;
   --color-warning: #f5a524;
 
+  /* Filled (solid) buttons: fixed across themes so light text always reads. */
+  --color-on-fill: #ffffff;
+  --color-primary-fill: #2f6fed;
+  --color-primary-fill-hover: #2159cf;
+  --color-danger-fill: #d8383d;
+  --color-danger-fill-hover: #bb2f34;
+
   --color-focus-ring: #5b93f7;
   --color-overlay: rgba(11, 13, 18, 0.55);
 }
