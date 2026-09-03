@@ -26,6 +26,10 @@ export default defineNuxtConfig({
   },
 
   app: {
+    // No route/layout animation — navigation is instant.
+    pageTransition: false,
+    layoutTransition: false,
+
     head: {
       title: 'Заметки',
       meta: [
