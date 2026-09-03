@@ -12,6 +12,7 @@ const emit = defineEmits<{
     <label class="title-field__label" for="note-title">Название заметки</label>
     <TextField
       id="note-title"
+      clearable
       :model-value="modelValue"
       placeholder="Без названия"
       aria-label="Название заметки"

@@ -3,8 +3,8 @@ import { NuxtLink } from '#components'
 
 const props = withDefaults(
   defineProps<{
-    /** Fill style. */
-    variant?: 'solid' | 'outline' | 'ghost'
+    /** Fill style. `plain` = no box at all: muted text, colour shift on hover. */
+    variant?: 'solid' | 'outline' | 'ghost' | 'plain'
     /** Semantic color. */
     color?: 'neutral' | 'primary' | 'danger'
     /** Control size. */
@@ -69,6 +69,11 @@ const isLink = computed(() => !!props.to && !props.disabled)
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Focus ring takes the button's own colour instead of the generic blue. */
+.btn:focus-visible {
+  outline-color: var(--c-main);
 }
 
 /* --- Size --------------------------------------------------------------- */
@@ -161,5 +166,23 @@ const isLink = computed(() => !!props.to && !props.disabled)
 }
 .btn--ghost:not(:disabled):active {
   background: color-mix(in srgb, var(--c-main) 18%, transparent);
+}
+
+/* Plain: no box, no side padding. Muted at rest, takes its colour on hover. */
+.btn--plain {
+  background: transparent;
+  padding-inline: 0;
+  color: var(--color-text-muted);
+}
+.btn--plain.btn--icon {
+  width: auto;
+  height: auto;
+}
+.btn--plain:not(:disabled):hover {
+  color: var(--c-main);
+}
+.btn--plain:focus-visible {
+  outline-width: 1px;
+  outline-offset: 1px;
 }
 </style>

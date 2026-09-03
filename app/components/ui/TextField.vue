@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { onBeforeUnmount } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import { debounce } from '~/utils/debounce'
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(
   defineProps<{
@@ -11,8 +13,10 @@ const props = withDefaults(
     ariaLabel?: string
     multiline?: boolean
     invalid?: boolean
+    /** Show a × button to wipe the value (single-line only). */
+    clearable?: boolean
   }>(),
-  { pauseDelay: 400, multiline: false, invalid: false },
+  { pauseDelay: 400, multiline: false, invalid: false, clearable: false },
 )
 
 const emit = defineEmits<{
@@ -24,7 +28,12 @@ const emit = defineEmits<{
   keydownEnter: [KeyboardEvent]
 }>()
 
+const control = ref<HTMLInputElement | HTMLTextAreaElement | null>(null)
 const emitPause = debounce(() => emit('pause'), props.pauseDelay)
+
+const showClear = computed(
+  () => props.clearable && !props.multiline && props.modelValue.length > 0,
+)
 
 function onInput(event: Event) {
   emit('update:modelValue', (event.target as HTMLInputElement | HTMLTextAreaElement).value)
@@ -42,27 +51,55 @@ function onKeydown(event: KeyboardEvent) {
   }
 }
 
+function clear() {
+  emit('commit') // seal whatever is being typed
+  emit('update:modelValue', '') // the wipe is its own undo step
+  emit('commit')
+  control.value?.focus()
+}
+
 onBeforeUnmount(() => emitPause.cancel())
 </script>
 
 <template>
-  <component
-    :is="multiline ? 'textarea' : 'input'"
-    class="field"
-    :class="{ 'field--invalid': invalid }"
-    :type="multiline ? undefined : 'text'"
-    :value="modelValue"
-    :placeholder="placeholder"
-    :aria-label="ariaLabel"
-    :aria-invalid="invalid || undefined"
-    :rows="multiline ? 2 : undefined"
-    @input="onInput"
-    @blur="onBlur"
-    @keydown="onKeydown"
-  />
+  <div class="field-wrap">
+    <component
+      :is="multiline ? 'textarea' : 'input'"
+      ref="control"
+      v-bind="$attrs"
+      class="field"
+      :class="{ 'field--invalid': invalid, 'field--has-clear': showClear }"
+      :type="multiline ? undefined : 'text'"
+      :value="modelValue"
+      :placeholder="placeholder"
+      :aria-label="ariaLabel"
+      :aria-invalid="invalid || undefined"
+      :rows="multiline ? 2 : undefined"
+      @input="onInput"
+      @blur="onBlur"
+      @keydown="onKeydown"
+    />
+    <Button
+      v-if="showClear"
+      icon
+      variant="plain"
+      size="sm"
+      no-title
+      label="Очистить"
+      class="field__clear"
+      @click="clear"
+    >
+      <Icon name="close" />
+    </Button>
+  </div>
 </template>
 
 <style scoped>
+.field-wrap {
+  position: relative;
+  width: 100%;
+}
+
 /* Single-line inputs match Button height. */
 .field {
   width: 100%;
@@ -75,6 +112,10 @@ onBeforeUnmount(() => emitPause.cancel())
   line-height: var(--line-height-normal);
   transition: border-color var(--transition-fast), background-color var(--transition-fast),
     box-shadow var(--transition-fast);
+}
+
+.field--has-clear {
+  padding-right: calc(var(--icon-size-sm) + var(--space-2) * 2);
 }
 
 .field::placeholder {
@@ -100,6 +141,13 @@ onBeforeUnmount(() => emitPause.cancel())
 /* Outline comes from the global :focus-visible rule; just tint the border. */
 .field:focus-visible {
   border-color: var(--color-primary);
+}
+
+.field__clear {
+  position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  transform: translateY(-50%);
 }
 
 textarea.field {

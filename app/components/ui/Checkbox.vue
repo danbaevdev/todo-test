@@ -14,6 +14,14 @@ function onChange(event: Event) {
   if (props.disabled) return
   emit('update:modelValue', (event.target as HTMLInputElement).checked)
 }
+
+/** Native checkboxes toggle on Space only — accept Enter too. */
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === 'Enter' && !props.disabled) {
+    event.preventDefault()
+    emit('update:modelValue', !props.modelValue)
+  }
+}
 </script>
 
 <template>
@@ -24,6 +32,7 @@ function onChange(event: Event) {
       :checked="modelValue"
       :disabled="disabled"
       @change="onChange"
+      @keydown="onKeydown"
     >
     <span class="checkbox__box" aria-hidden="true">
       <Icon name="check" />

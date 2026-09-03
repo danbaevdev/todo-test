@@ -55,11 +55,7 @@ describe('sanitizeNoteContent', () => {
 
 describe('noteTitle', () => {
   it('uses the trimmed title when present', () => {
-    expect(noteTitle({ title: '  Покупки  ', todos: [] })).toEqual({
-      text: 'Покупки',
-      isFallback: false,
-      fromTodoId: null,
-    })
+    expect(noteTitle({ title: '  Покупки  ', todos: [] })).toBe('Покупки')
   })
 
   it('borrows the first non-empty todo when there is no title', () => {
@@ -72,15 +68,13 @@ describe('noteTitle', () => {
           { id: 'c', text: 'Хлеб', done: false },
         ],
       }),
-    ).toEqual({ text: 'Купить молоко', isFallback: true, fromTodoId: 'b' })
+    ).toBe('Купить молоко')
   })
 
   it('falls back to a placeholder when there is nothing at all', () => {
-    expect(noteTitle({ title: '', todos: [{ id: 'a', text: '', done: false }] })).toEqual({
-      text: 'Без названия',
-      isFallback: true,
-      fromTodoId: null,
-    })
+    expect(noteTitle({ title: '', todos: [{ id: 'a', text: '', done: false }] })).toBe(
+      'Без названия',
+    )
   })
 })
 

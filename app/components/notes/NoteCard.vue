@@ -8,31 +8,18 @@ const emit = defineEmits<{ delete: [] }>()
 
 const doneCount = computed(() => props.note.todos.filter((t) => t.done).length)
 const title = computed(() => noteTitle(props.note))
-/** Don't repeat the todo that's already shown as the title. */
-const previewTodos = computed(() =>
-  props.note.todos.filter((t) => t.id !== title.value.fromTodoId),
-)
-/** Show the preview unless every todo was absorbed into the title. */
-const showPreview = computed(
-  () => previewTodos.value.length > 0 || props.note.todos.length === 0,
-)
 </script>
 
 <template>
   <article class="note-card">
     <div class="note-card__head">
-      <h2
-        class="note-card__title line-clamp-2"
-        :class="{ 'note-card__title--untitled': title.isFallback }"
-      >
-        {{ title.text }}
-      </h2>
+      <h2 class="note-card__title line-clamp-2">{{ title }}</h2>
       <span v-if="note.todos.length" class="note-card__count">
         {{ doneCount }} / {{ note.todos.length }}
       </span>
     </div>
 
-    <TodoPreviewList v-if="showPreview" :todos="previewTodos" :max="3" />
+    <TodoPreviewList :todos="note.todos" :max="3" />
 
     <div class="note-card__actions">
       <Button :to="`/notes/${note.id}`" variant="outline">Редактировать</Button>
