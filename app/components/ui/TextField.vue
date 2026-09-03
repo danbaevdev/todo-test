@@ -118,6 +118,14 @@ onBeforeUnmount(() => emitPause.cancel())
   padding-right: calc(var(--icon-size-xs) + var(--space-2) * 2);
 }
 
+/* iOS Safari auto-zooms the viewport when a focused field's font is < 16px.
+   Bump to 16px on touch devices — keeps pinch-zoom, kills the jump. */
+@media (pointer: coarse) {
+  .field {
+    font-size: var(--font-size-md);
+  }
+}
+
 .field::placeholder {
   color: var(--color-text-muted);
 }
