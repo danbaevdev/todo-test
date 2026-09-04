@@ -108,6 +108,22 @@ function leave() {
   router.push('/')
 }
 
+/** Back to wherever we came from, else the notes list. */
+function navigateBack() {
+  leaving = true
+  if (typeof router.options.history.state.back === 'string') router.back()
+  else router.push('/')
+}
+
+/**
+ * Shared exit path for the "Все заметки" link and "Отменить редактирование":
+ * leave straight away when nothing changed, otherwise ask first.
+ */
+function attemptExit() {
+  if (isDirty.value) pending.value = 'cancel'
+  else navigateBack()
+}
+
 function save() {
   history.seal()
   if (!isNoteEmpty(note.value)) {
@@ -118,15 +134,15 @@ function save() {
   leave() // the route guard persists / discards
 }
 
-function requestCancel() {
-  if (isDirty.value) pending.value = 'cancel'
-  else leave()
-}
-
 function confirmPending() {
-  if (pending.value === 'remove' && !isCreate) store.deleteNote(props.noteId!)
+  if (pending.value === 'remove') {
+    if (!isCreate) store.deleteNote(props.noteId!)
+    pending.value = null
+    leave()
+    return
+  }
   pending.value = null
-  leave()
+  navigateBack()
 }
 
 // --- Todo actions -> history -------------------------------------------
@@ -146,16 +162,11 @@ function addTodo() {
   })
 }
 
-/** Go back if we came from somewhere in the app, otherwise to the notes list. */
-function goBack() {
-  if (typeof router.options.history.state.back === 'string') router.back()
-  else router.push('/')
-}
 </script>
 
 <template>
   <div class="editor">
-    <Button class="editor__back" variant="plain" @click="goBack">
+    <Button class="editor__back" variant="plain" @click="attemptExit">
       <Icon name="arrow-left" />
       Все заметки
     </Button>
@@ -166,7 +177,7 @@ function goBack() {
       :can-save="canSave"
       :can-delete="!isCreate"
       @save="save"
-      @cancel="requestCancel"
+      @cancel="attemptExit"
       @remove="pending = 'remove'"
       @undo="history.undo"
       @redo="history.redo"
