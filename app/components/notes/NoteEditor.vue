@@ -90,15 +90,13 @@ useUndoRedoShortcuts({
 })
 
 /**
- * Teardown for a confirmed exit: forget the draft, and (edit mode) drop the
- * note entirely if it never got a title or a single todo — an empty note isn't
- * worth keeping (Apple Notes behaves the same way).
+ * Teardown for a confirmed exit: forget the draft and persist.
+ * A stored note is never deleted here — cancelling discards the working copy
+ * (even if it was cleared out), and `save()` refuses to store an empty note,
+ * so deletion only ever happens through the explicit "Удалить" action.
  */
 function finishLeave() {
   draft.clear()
-  if (!isCreate && store.hasNote(props.noteId!) && isNoteEmpty(note.value)) {
-    store.deleteNote(props.noteId!)
-  }
   store.flush()
 }
 
