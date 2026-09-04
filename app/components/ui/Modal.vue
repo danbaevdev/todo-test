@@ -91,6 +91,13 @@ onBeforeUnmount(() => {
   max-height: calc(100dvh - var(--space-8));
 }
 
+/* The dialog only holds focus on open (tabindex="-1") — no ring on the box
+   itself; the controls inside it still get their own focus outline. */
+.modal__dialog:focus,
+.modal__dialog:focus-visible {
+  outline: none;
+}
+
 .modal__header {
   display: flex;
   align-items: flex-start;
