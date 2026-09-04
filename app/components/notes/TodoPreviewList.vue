@@ -9,11 +9,10 @@ const preview = computed(() => previewTodos(props.todos, props.max))
 </script>
 
 <template>
-  <div class="preview">
-    <ul v-if="preview.visible.length" class="preview__list">
+  <div v-if="preview.visible.length" class="preview">
+    <ul class="preview__list">
       <TodoPreviewItem v-for="todo in preview.visible" :key="todo.id" :todo="todo" />
     </ul>
-    <p v-else class="preview__empty">Нет пунктов</p>
     <p v-if="preview.hiddenCount" class="preview__more">и ещё {{ preview.hiddenCount }}</p>
   </div>
 </template>
@@ -31,7 +30,6 @@ const preview = computed(() => previewTodos(props.todos, props.max))
   gap: var(--space-1);
 }
 
-.preview__empty,
 .preview__more {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
