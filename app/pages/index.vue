@@ -6,14 +6,8 @@ import type {Note} from '~/types/note'
 
 const store = useNotesStore()
 const {sortedNotes, loaded} = storeToRefs(store)
-const router = useRouter()
 
 const pendingDelete = ref<Note | null>(null)
-
-function createNote() {
-  const note = store.createNote()
-  router.push(`/notes/${note.id}`)
-}
 
 function confirmDelete() {
   if (pendingDelete.value) store.deleteNote(pendingDelete.value.id)
@@ -25,7 +19,7 @@ function confirmDelete() {
   <div class="notes">
     <div class="notes__bar">
       <h1>Мои заметки</h1>
-      <Button color="primary" @click="createNote">Новая заметка +</Button>
+      <Button color="primary" to="/notes/add">Новая заметка +</Button>
     </div>
 
     <template v-if="loaded">

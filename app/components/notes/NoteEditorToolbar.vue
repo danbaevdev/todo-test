@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import {ariaKeyshortcuts} from '~/utils/platform'
 
-defineProps<{
-  canUndo: boolean
-  canRedo: boolean
-  canSave: boolean
-}>()
+withDefaults(
+  defineProps<{
+    canUndo: boolean
+    canRedo: boolean
+    canSave: boolean
+    /** New notes have nothing saved to delete — hide the button. */
+    canDelete?: boolean
+  }>(),
+  {canDelete: true},
+)
 
 const emit = defineEmits<{
   save: []
@@ -60,7 +65,9 @@ const redoShortcut = {key: 'Z', shift: true} as const
     </div>
 
     <div class="toolbar__extra">
-      <Button variant="outline" color="danger" @click="emit('remove')">Удалить</Button>
+      <Button v-if="canDelete" variant="outline" color="danger" @click="emit('remove')">
+        Удалить
+      </Button>
       <Button variant="outline" @click="emit('cancel')">Отменить редактирование</Button>
     </div>
 

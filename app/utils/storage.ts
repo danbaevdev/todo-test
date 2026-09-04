@@ -10,6 +10,9 @@ export interface StorageLike {
 
 export const NOTES_KEY = 'notes-todo:state'
 export const DRAFT_KEY_PREFIX = 'notes-todo:draft:'
+/** Draft ids that have no matching note but must survive pruning (the
+ *  "new note" page keeps its unsaved draft under a fixed slot). */
+export const RESERVED_DRAFT_IDS = ['new']
 
 const noopStorage: StorageLike = {
   getItem: () => null,
@@ -128,7 +131,7 @@ export function createNotesStorage(backend?: StorageLike): NotesStorage {
 
     pruneDrafts(keepNoteIds) {
       if (!store.keys) return
-      const keep = new Set(keepNoteIds)
+      const keep = new Set([...RESERVED_DRAFT_IDS, ...keepNoteIds])
       for (const key of store.keys()) {
         if (!key.startsWith(DRAFT_KEY_PREFIX)) continue
         if (!keep.has(key.slice(DRAFT_KEY_PREFIX.length))) store.removeItem(key)

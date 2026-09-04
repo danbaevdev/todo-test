@@ -79,6 +79,21 @@ describe('createNotesStorage', () => {
     expect(storage.readDraft('orphan-2')).toBeNull()
   })
 
+  it('keeps the reserved "new note" draft when pruning', () => {
+    const backend = memoryStorage()
+    const storage = createNotesStorage(backend)
+    storage.writeDraft({
+      schemaVersion: SCHEMA_VERSION,
+      noteId: 'new',
+      note: makeNote({id: 'new'}),
+      savedAt: 1,
+    })
+
+    storage.pruneDrafts([]) // no notes at all
+
+    expect(storage.readDraft('new')).not.toBeNull()
+  })
+
   it('ignores a draft with a mismatched schema version', () => {
     const backend = memoryStorage({
       [DRAFT_KEY_PREFIX + 'n1']: JSON.stringify({
