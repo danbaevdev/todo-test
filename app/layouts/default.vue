@@ -14,6 +14,7 @@
 <style scoped>
 .shell {
   min-height: 100vh;
+  min-height: 100dvh; /* iOS: 100vh overshoots by the browser chrome height */
   display: flex;
   flex-direction: column;
 }

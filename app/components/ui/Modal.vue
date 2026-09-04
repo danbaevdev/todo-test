@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - var(--space-8));
+  max-height: calc(100dvh - var(--space-8));
 }
 
 .modal__header {
