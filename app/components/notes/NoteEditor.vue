@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
+import {computed, nextTick, ref, watch} from 'vue'
 import {onBeforeRouteLeave} from 'vue-router'
 import {useEditHistory} from '~/composables/useEditHistory'
 import {useNoteDraft} from '~/composables/useNoteDraft'
@@ -119,15 +119,8 @@ onBeforeRouteLeave(() => {
   return true
 })
 
-/** Tab close / reload / external URL — only the native prompt is possible. */
-function onBeforeUnload(event: BeforeUnloadEvent) {
-  if (isDirty.value) {
-    event.preventDefault()
-    event.returnValue = ''
-  }
-}
-onMounted(() => window.addEventListener('beforeunload', onBeforeUnload))
-onBeforeUnmount(() => window.removeEventListener('beforeunload', onBeforeUnload))
+// Tab close / reload isn't intercepted with a native "Reload site?" prompt —
+// the draft is flushed on unload (useNoteDraft) and offered back on return.
 
 function leave() {
   leaving = true

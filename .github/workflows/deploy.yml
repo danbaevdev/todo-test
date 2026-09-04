@@ -28,7 +28,16 @@ jobs:
 
       - run: npm ci
 
-      - run: npm run lint && npm run lint:style && npm run test
+      # Any failure here fails the job, so the `deploy` job (needs: build)
+      # is skipped and nothing ships.
+      - name: Lint
+        run: npm run lint
+
+      - name: Lint styles
+        run: npm run lint:style
+
+      - name: Unit & component tests
+        run: npm run test
 
       - name: Generate static site
         run: npm run generate

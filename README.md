@@ -51,7 +51,7 @@ SPA-приложение для заметок со списками задач.
 ```bash
 npm install
 npm run dev            # http://localhost:3000
-npm run test           # unit-тесты (Vitest): история изменений, стор, хранилище
+npm run test           # Vitest: логика (история, стор, хранилище) + компонентный тест редактора
 npm run typecheck      # vue-tsc, strict
 npm run build          # продакшн-сборка в .output
 
