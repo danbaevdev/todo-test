@@ -199,6 +199,7 @@ function addTodo() {
       :can-redo="canRedo"
       :can-save="canSave"
       :can-delete="!isCreate"
+      :cancel-label="isCreate ? 'Отмена' : 'Отменить редактирование'"
       @save="save"
       @cancel="attemptExit"
       @remove="pending = 'remove'"
@@ -231,9 +232,9 @@ function addTodo() {
 
     <ConfirmDialog
       v-if="pending === 'cancel'"
-      title="Отменить редактирование?"
-      message="Несохранённые изменения будут потеряны."
-      confirm-label="Отменить изменения"
+      :title="isCreate ? 'Отменить создание заметки?' : 'Отменить редактирование?'"
+      :message="isCreate ? 'Заметка не будет сохранена.' : 'Несохранённые изменения будут потеряны.'"
+      :confirm-label="isCreate ? 'Отменить создание' : 'Отменить изменения'"
       danger
       @confirm="confirmPending"
       @cancel="pending = null"

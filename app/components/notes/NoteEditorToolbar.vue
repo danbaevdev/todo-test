@@ -8,8 +8,10 @@ withDefaults(
     canSave: boolean
     /** New notes have nothing saved to delete — hide the button. */
     canDelete?: boolean
+    /** "Отменить редактирование" when editing, "Отмена" when creating. */
+    cancelLabel?: string
   }>(),
-  {canDelete: true},
+  {canDelete: true, cancelLabel: 'Отменить редактирование'},
 )
 
 const emit = defineEmits<{
@@ -68,7 +70,7 @@ const redoShortcut = {key: 'Z', shift: true} as const
       <Button v-if="canDelete" variant="outline" color="danger" @click="emit('remove')">
         Удалить
       </Button>
-      <Button variant="outline" @click="emit('cancel')">Отменить редактирование</Button>
+      <Button variant="outline" @click="emit('cancel')">{{ cancelLabel }}</Button>
     </div>
 
     <div class="toolbar__save-wrap">
