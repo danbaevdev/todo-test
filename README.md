@@ -29,6 +29,7 @@ SPA-приложение для заметок со списками задач.
 | Типы и версия схемы | `app/types/note.ts` |
 | Хранилище (localStorage, миграции, черновик) | `app/utils/storage.ts` |
 | Менеджер состояния (Pinia) | `app/stores/notes.ts` |
+| Редактор (создание и правка) | `app/components/notes/NoteEditor.vue` + `app/pages/notes/{add,[id]}.vue` |
 | История изменений | `app/composables/useEditHistory.ts` |
 | Глобальные Ctrl+Z / Shift+Ctrl+Z | `app/composables/useUndoRedoShortcuts.ts` |
 | Автосохранение черновика | `app/composables/useNoteDraft.ts` |
