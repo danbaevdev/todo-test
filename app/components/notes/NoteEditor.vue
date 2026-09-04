@@ -194,11 +194,6 @@ function addTodo() {
 
 <template>
   <div class="editor">
-    <Button class="editor__back" variant="plain" @click="attemptExit">
-      <Icon name="arrow-left" />
-      Все заметки
-    </Button>
-
     <NoteEditorToolbar
       :can-undo="canUndo"
       :can-redo="canRedo"
@@ -281,15 +276,6 @@ function addTodo() {
   .editor {
     padding-bottom: 0;
   }
-}
-
-/* Ghost button pulled left by its own inline padding so the label sits on the grid edge. */
-.editor__back {
-  justify-self: start;
-}
-
-.editor__back :deep(svg) {
-  font-size: var(--icon-size-sm);
 }
 
 .editor__todos {
