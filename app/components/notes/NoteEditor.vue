@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, nextTick, ref, watch} from 'vue'
+import {computed, nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import {onBeforeRouteLeave} from 'vue-router'
 import {useEditHistory} from '~/composables/useEditHistory'
 import {useNoteDraft} from '~/composables/useNoteDraft'
@@ -90,18 +90,46 @@ useUndoRedoShortcuts({
 })
 
 /**
- * On the way out: forget the draft, and (edit mode) drop the note entirely if
- * it never got a title or a single todo — an empty note isn't worth keeping
- * (Apple Notes behaves the same way).
+ * Teardown for a confirmed exit: forget the draft, and (edit mode) drop the
+ * note entirely if it never got a title or a single todo — an empty note isn't
+ * worth keeping (Apple Notes behaves the same way).
  */
-onBeforeRouteLeave(() => {
-  leaving = true
+function finishLeave() {
   draft.clear()
   if (!isCreate && store.hasNote(props.noteId!) && isNoteEmpty(note.value)) {
     store.deleteNote(props.noteId!)
   }
   store.flush()
+}
+
+/**
+ * Catch every way out of the editor, including the browser Back button and
+ * links elsewhere in the app. Our own buttons set `leaving` first, so they
+ * pass straight through; anything else with unsaved changes is stopped and
+ * routed through the confirm dialog.
+ */
+onBeforeRouteLeave(() => {
+  if (leaving) {
+    finishLeave()
+    return true
+  }
+  if (isDirty.value) {
+    pending.value = 'cancel'
+    return false
+  }
+  finishLeave()
+  return true
 })
+
+/** Tab close / reload / external URL — only the native prompt is possible. */
+function onBeforeUnload(event: BeforeUnloadEvent) {
+  if (isDirty.value) {
+    event.preventDefault()
+    event.returnValue = ''
+  }
+}
+onMounted(() => window.addEventListener('beforeunload', onBeforeUnload))
+onBeforeUnmount(() => window.removeEventListener('beforeunload', onBeforeUnload))
 
 function leave() {
   leaving = true
