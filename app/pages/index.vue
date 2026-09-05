@@ -2,6 +2,7 @@
 import {ref} from 'vue'
 import {storeToRefs} from 'pinia'
 import {useNotesStore} from '~/stores/notes'
+import {noteTitle} from '~/utils/note'
 import type {Note} from '~/types/note'
 
 const store = useNotesStore()
@@ -37,7 +38,7 @@ function confirmDelete() {
     <ConfirmDialog
       v-if="pendingDelete"
       title="Удалить заметку?"
-      :message="`Заметка «${pendingDelete.title || 'Без названия'}» будет удалена без возможности восстановления.`"
+      :message="`Заметка «${noteTitle(pendingDelete)}» будет удалена без возможности восстановления.`"
       confirm-label="Удалить"
       danger
       @confirm="confirmDelete"
